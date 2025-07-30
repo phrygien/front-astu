@@ -66,6 +66,8 @@
                     <x-menu-separator />
                 @endif
 
+                <x-menu-item title="Dashboard" icon="o-home" link="/dashboard" />
+
                 <x-menu-item title="Hello" icon="o-sparkles" link="/" />
                 
                 <x-menu-sub title="Settings" icon="o-cog-6-tooth">
