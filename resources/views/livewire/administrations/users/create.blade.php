@@ -73,15 +73,17 @@ new class extends Component {
 }; ?>
 
 <div class="p-8">
+
+    <x-header title="Creation utilisateur" subtitle="Ajouter un tulisateur WINPARF" separator>
+
+        {{-- <x-slot:actions>
+            <x-button label="Annuler" />
+            <x-button label="Sauvegarder" class="btn-primary" type="submit" spinner="saveProfile" />
+        </x-slot:actions> --}}
+    </x-header>
+
     <div class="max-w-4xl mx-auto">
     <x-form wire:submit="save">
-        <x-header title="Creation utilisateur" subtitle="Ajouter un tulisateur WINPARF" separator>
-
-            {{-- <x-slot:actions>
-                <x-button label="Annuler" />
-                <x-button label="Sauvegarder" class="btn-primary" type="submit" spinner="saveProfile" />
-            </x-slot:actions> --}}
-        </x-header>
 
         <x-card subtitle="Basic information sur le profil" separator progress-indicator class="space-y">
             <div class="mt-3">
