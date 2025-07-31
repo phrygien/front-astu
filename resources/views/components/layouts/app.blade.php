@@ -26,6 +26,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ isset($title) ? $title.' - '.config('app.name') : config('app.name') }}</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen font-sans antialiased bg-base-200">
@@ -66,33 +70,30 @@
                 @endif
 
                 <x-menu-item title="Dashboard" icon="o-home" link="/dashboard" />
-
-                {{-- <x-menu-item title="Hello" icon="o-sparkles" link="/" /> --}}
                 
-                {{-- <x-menu-sub title="Administrations" icon="o-cog-6-tooth">
-                    <x-menu-item title="Tous les profiles" icon="o-key" link="/administrations/profils" />
-                    <x-menu-item title="Creation profile" icon="o-user" link="/administrations/profil/create" />
-                </x-menu-sub> --}}
+                <x-menu-sub title="Administrations" icon="o-cog-6-tooth">
+                    <x-menu-item title="Profil" link="/administrations/profils" />
+                    <x-menu-item title="Utilisateur" link="##" />
+                </x-menu-sub>
 
-                <x-menu-separator />
-                <x-menu-item title="Profil" icon="o-cog-6-tooth" link="/administrations/profils" />
-                {{-- <x-menu-item title="Profil" icon="o-user" link="/administrations/profil/create" /> --}}
-                <x-menu-item title="Utilisateurs" icon="o-users" link="##" />
+                <x-menu-sub title="Gestion produit" icon="o-shopping-bag">
+                    <x-menu-item title="Parkod" link="##" />
+                    <x-menu-item title="Marque" link="##" />
+                    <x-menu-item title="Produit" link="##" />
+                </x-menu-sub>
 
-                <x-menu-separator />
-                <x-menu-item title="Parkod" icon="o-calculator" link="##" />
-                <x-menu-item title="Marque" icon="o-tag" link="##" />
-                <x-menu-item title="Produit" icon="o-shopping-bag" link="##" />
+                <x-menu-sub title="Gestion Fournisseur" icon="o-truck">
+                    <x-menu-item title="Fournisseur" link="##" />
+                    <x-menu-item title="Produit Fournisseur" link="##" />
+                </x-menu-sub>
 
-                <x-menu-separator />
-                <x-menu-item title="Fournisseur" icon="o-users" link="##" />
-                <x-menu-item title="Produit Fournisseur" icon="o-shopping-bag" link="##" />
+                <x-menu-sub title="Gestion Magasin" icon="o-truck">
+                    <x-menu-item title="Magasin" link="##" />
+                </x-menu-sub>
 
-                <x-menu-separator />
-                <x-menu-item title="Magasin" icon="o-users" link="##" />
-
-                <x-menu-separator text="Gestion Approvisionnement" />
-                <x-menu-item title="Commande" icon="o-users" link="##" />
+                <x-menu-sub title="Gestion Approvisionnement" icon="o-building-storefront">
+                    <x-menu-item title="Commande" link="##" />
+                </x-menu-sub>
 
 
             </x-menu>
