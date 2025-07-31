@@ -68,11 +68,11 @@
 
                 <x-menu-item title="Dashboard" icon="o-home" link="/dashboard" />
 
-                <x-menu-item title="Hello" icon="o-sparkles" link="/" />
+                {{-- <x-menu-item title="Hello" icon="o-sparkles" link="/" /> --}}
                 
-                <x-menu-sub title="Settings" icon="o-cog-6-tooth">
-                    <x-menu-item title="Wifi" icon="o-wifi" link="####" />
-                    <x-menu-item title="Archives" icon="o-archive-box" link="####" />
+                <x-menu-sub title="Administrations" icon="o-cog-6-tooth">
+                    <x-menu-item title="Tous les profiles" icon="o-key" link="/administrations/profils" />
+                    <x-menu-item title="Creation profile" icon="o-user" link="/administrations/profil/create" />
                 </x-menu-sub>
             </x-menu>
         </x-slot:sidebar>

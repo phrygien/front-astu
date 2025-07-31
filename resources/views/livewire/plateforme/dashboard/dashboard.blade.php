@@ -7,7 +7,7 @@ new class extends Component {
 }; ?>
 
 <div>
-        <x-header title=" Home">
+        <x-header title="Dashboard">
             <x-slot:actions>
                 <x-theme-toggle class="btn btn-circle btn-ghost" />
             </x-slot:actions>
