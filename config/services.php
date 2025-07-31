@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'jwt' => [
+        'profile_endpoint' => 'http://dev.astucom.com:9038/erpservice/api'
+    ]
+
 ];

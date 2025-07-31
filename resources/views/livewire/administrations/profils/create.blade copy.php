@@ -86,16 +86,39 @@ new class extends Component
 
 }; ?>
 
-<div class="p-8">
-    <div class="max-w-4xl mx-auto">
-                    <x-form wire:submit="saveProfile">
-        <x-card title="Creation profil" subtitle="Tous les champs sont obligatoire" separator progress-indicator>
-                <x-input label="Nom du profile" wire:model.live="profileName" />
-        
-        </x-card>
+<div>
 
-        <x-card title="Permissions" subtitle="Selectionner les actions pour ce profil" separator class="mt-3">
-                            <div class="flex flex-col gap-4 text-on-surface dark:text-on-surface-dark">
+    
+    <x-form wire:submit="saveProfile">
+    <x-header title="Profie" subtitle="Manage profiles" separator>
+        <x-slot:middle class="!justify-end">
+            <x-input icon="o-bolt" placeholder="Chercher profil..." />
+        </x-slot:middle>
+        <x-slot:actions>
+            <x-button icon="o-funnel" />
+            <x-button label="Sauvegarder" class="btn-primary" type="submit" spinner="saveProfile" />
+        </x-slot:actions>
+    </x-header>
+
+        {{--  Basic section  --}}
+        <div class="lg:grid grid-cols-5">
+            <div class="col-span-2">
+                <x-header title="Profile" subtitle="Basic info from profile" size="text-lg" />
+            </div>
+            <div class="col-span-3 grid gap-3">
+                <x-input label="Nom du profil" wire:model="profileName" placeholder="" hint="Nom pour identifier le profil" />
+            </div>
+        </div>
+ 
+        {{--  Details section --}}
+        <hr class="my-5 border-base-300" />
+ 
+        <div class="lg:grid grid-cols-5">
+            <div class="col-span-2">
+                <x-header title="Permissions" subtitle="More about the actions" size="text-lg" />
+            </div>
+            <div class="col-span-3 grid gap-3">
+                <div class="flex flex-col gap-4 text-on-surface dark:text-on-surface-dark">
                     @foreach($tree as $i => $module)
                         <div x-data="{ isExpanded: {{ $openModule === $i ? 'true' : 'false' }} }"
                             class="overflow-hidden rounded-sm border border-neutral-300 bg-neutral-50/40 dark:border-neutral-700 dark:bg-neutral-900/50">
@@ -125,6 +148,9 @@ new class extends Component
                                                     <label class="flex items-center gap-2">
                                                         <input type="checkbox"  class="checkbox" wire:click="toggleAction('{{ $action['code'] }}')"
                                                             @checked(in_array($action['code'], $selectedActions)) />
+                                                        {{-- <input type="checkbox"
+                                                            wire:click="toggleAction('{{ $action['code'] }}')"
+                                                            @checked(in_array($action['code'], $selectedActions))> --}}
                                                         {{ $action['name'] }}
                                                     </label>
                                                 @endforeach
@@ -136,13 +162,12 @@ new class extends Component
                         </div>
                     @endforeach
                 </div>
-                
+            </div>
+        </div>
+ 
         <x-slot:actions>
-            <x-button label="Annuler" />
+            <x-button label="Abandoner" />
             <x-button label="Sauvegarder" class="btn-primary" type="submit" spinner="saveProfile" />
-            </x-slot:actions>
-        </x-card>
-
-        </x-form>
-    </div>
+        </x-slot:actions>
+    </x-form>
 </div>
