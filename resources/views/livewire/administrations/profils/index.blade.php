@@ -84,7 +84,7 @@ new class extends Component {
             </td>
             <td> {{ \Carbon\Carbon::parse($profil['created_at'])->format('d/m/Y H:i') }}</td>
             <td class="text-end px-6 py-3">
-                <button class="btn btn-active btn-primary">Details</button>
+                <a class="btn btn-active btn-primary" href="{{ route('profils.edit', $profil['id']) }}" wire:navigate>Details</a>
                 <button class="btn btn-dash btn-warning">Activer</button>
                 <button class="btn btn-dash btn-error">Desactiver</button>
             </td>
