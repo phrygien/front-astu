@@ -110,7 +110,7 @@ new class extends Component
         if ($response->ok() && !$response['error']) {
             $this->success('Modification sauvegardée avec succès');
         } else {
-            $this->danger('Erreur lors de la mise à jour du profil.');
+            $this->warning('Sellectioner au moin un permission.');
         }
     }
 
@@ -174,7 +174,7 @@ new class extends Component
                                                         {{-- <input type="checkbox"  class="checkbox" wire:click="toggleAction('{{ $action['code'] }}')"
                                                             @checked(in_array($action['code'], $selectedActions)) /> --}}
                                                             <input type="checkbox" class="checkbox" wire:click="toggleAction('{{ $action['code'] }}')"
-    @checked(in_array($action['code'], $selectedActions)) />
+                                                            @checked(in_array($action['code'], $selectedActions)) />
 
                                                         {{ $action['name'] }}
                                                     </label>

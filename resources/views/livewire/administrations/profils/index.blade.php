@@ -28,6 +28,22 @@ new class extends Component {
         }
     }
 
+    /**
+     *  activer profil 
+     **/
+    public function activeProfil(): void
+    {
+
+    }
+
+    /**
+     * Desactiver profil
+     * */
+    public function disableProfil(): void
+    {
+        
+    }
+
     public function with(): array
     {
         return [
