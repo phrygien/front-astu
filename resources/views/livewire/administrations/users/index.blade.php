@@ -5,8 +5,58 @@ use Illuminate\Support\Facades\Http;
 
 new class extends Component {
     
-}; ?>
+    public $profils = [];
+    public bool $myModal1 = false;
+    public bool $loading = true;
+    public bool $showSkeleton = true;
 
+    public function mount(): void
+    {
+        $this->fetchProfil();
+    }
+
+    /**
+     * fetch profil
+     * */
+
+    public function fetchProfil(): void
+    {
+        $token = session('token');
+
+        // $response = Http::withToken($token)
+        //     ->get("http://dev.astucom.com:9038/erpservice/api/admin/profil");
+
+        // if ($response->ok() && !$response['error']) {
+        //     $this->profils = $response['data'];
+        // }
+    }
+
+    public function with(): array
+    {
+        return [
+            'profils' => $this->profils,
+            'showSkeleton' => $this->showSkeleton,
+        ];
+    }
+
+    /**
+     *  activer profil 
+     **/
+    public function activeProfil(): void
+    {
+
+    }
+
+    /**
+     * Desactiver profil
+     * */
+    public function disableProfil(): void
+    {
+        
+    }
+
+
+}; ?>
 <div>
     <x-header title="Utilisateurs" subtitle="Gerer les utilisateurs ASTUPARF" separator>
         <x-slot:middle class="!justify-end">
@@ -37,23 +87,47 @@ new class extends Component {
                 <th class="text-end hidden md:table-cell">Action</th>
             </tr>
             </thead>
-            <tbody>
 
-            <tr>
-                <th>3</th>
-                <td>Brice Swyre</td>
-                <td>Tax Accountant</td>
-                <td>Red</td>
-                <td class="text-end px-6 py-3 hidden md:table-cell">
-                    <a class="btn btn-active btn-primary btn-sm" href="###" wire:navigate>Details</a>
-                    <button class="btn btn-dash btn-sm btn-warning">Activer</button>
-                    <button class="btn btn-dash btn-sm btn-error">Desactiver</button>
-                    <button class="btn btn-secondary btn-sm">Supprimer</button>
-                </td>
-            </tr>
-            
-            
+            <tbody>
+               @if ($showSkeleton)
+                    @for ($i = 0; $i < 10; $i++)
+                    <tr class="animate-pulse">
+                        <th class="py-4">
+                            <div class="h-4 w-4 bg-gray-200 dark:bg-neutral-800 rounded"></div>
+                        </th>
+                        <td>
+                            <div class="h-4 w-32 bg-gray-200 dark:bg-neutral-800 rounded"></div>
+                        </td>
+                        <td>
+                            <div class="h-4 w-40 bg-gray-200 dark:bg-neutral-800 rounded"></div>
+                        </td>
+                        <td>
+                            <div class="h-4 w-24 bg-gray-200 dark:bg-neutral-800 rounded"></div>
+                        </td>
+                        <td class="text-end px-6 py-3 hidden md:table-cell">
+                            <div class="flex gap-2 justify-end">
+                                <div class="h-8 w-16 bg-gray-200 dark:bg-neutral-800 rounded"></div>
+                                <div class="h-8 w-16 bg-gray-200 dark:bg-neutral-800 rounded"></div>
+                                <div class="h-8 w-16 bg-gray-200 dark:bg-neutral-800 rounded"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    @endfor
+                @else
+                    @foreach($profils as $profil)
+                        <tr class="group hover:bg-gray-50 transition">
+                            <th>gh</th>
+                            <td>sdfs</td>
+                            <td>sdfd</td>
+                            <td>dgfd</td>
+                            <td class="text-end px-6 py-3 hidden md:table-cell">
+                                <!-- Tes boutons ici -->
+                            </td>
+                        </tr>
+                    @endforeach
+                @endif
             </tbody>
+
         </table>
     </div>
 
