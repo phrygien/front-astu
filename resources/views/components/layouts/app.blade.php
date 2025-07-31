@@ -43,8 +43,30 @@
         </x-slot:brand>
 
         <x-slot:actions>
-            <x-button label="Messages" icon="o-envelope" link="###" class="btn-ghost btn-sm" responsive />
             <x-button label="Notifications" icon="o-bell" link="###" class="btn-ghost btn-sm" responsive />
+             <div class="flex gap-2">
+                <div class="dropdown dropdown-end">
+                    <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+                        <div class="w-10 rounded-full">
+                        <img
+                            alt="Tailwind CSS Navbar component"
+                            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                        </div>
+                    </div>
+                    <ul
+                        tabindex="0"
+                        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                        <li>
+                        <a class="justify-between">
+                            Profile
+                            <span class="badge">New</span>
+                        </a>
+                        </li>
+                        <li><a>Settings</a></li>
+                        <li><a>Logout</a></li>
+                    </ul>
+                </div>
+            </div>
         </x-slot:actions>
     </x-nav>
 
@@ -58,7 +80,7 @@
             <x-menu activate-by-route>
 
                 {{-- User --}}
-                @if($user)
+                {{-- @if($user)
 
                     <x-list-item :item="$user" value="name" sub-value="email" no-separator no-hover class="-mx-2 !-my-2 rounded">
                         <x-slot:actions>
@@ -67,12 +89,13 @@
                     </x-list-item>
 
                     <x-menu-separator />
-                @endif
+                @endif --}}
 
                 <x-menu-item title="Dashboard" icon="o-home" link="/dashboard" />
                 
                 <x-menu-sub title="Administrations" icon="o-cog-6-tooth">
                     <x-menu-item title="Profil" link="/administrations/profils" />
+                    <x-menu-item title="Creation d'un Profil" link="/administrations/profil/create" />
                     <x-menu-item title="Utilisateur" link="##" />
                 </x-menu-sub>
 

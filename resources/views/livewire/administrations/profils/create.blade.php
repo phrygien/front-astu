@@ -68,8 +68,9 @@ new class extends Component
             ->post('http://dev.astucom.com:9038/erpservice/api/admin/profil', $payload);
 
         if ($response->ok() && !$response['error']) {
-            $this->success('We are done, check it out');
-            $this->reset();
+            $this->success('Profil sauvegardé avec succès');
+            $this->reset(['profileName']);
+            $this->selectedActions = [];
         } else {
             $this->success('Erreur lors de la sauvegarde du profil.');
         }
@@ -88,13 +89,21 @@ new class extends Component
 
 <div class="p-8">
     <div class="max-w-4xl mx-auto">
-                    <x-form wire:submit="saveProfile">
-        <x-card title="Creation profil" subtitle="Tous les champs sont obligatoire" separator progress-indicator>
+    <x-form wire:submit="saveProfile">
+        <x-header title="Creation profil" subtitle="This is responsive" separator>
+
+            <x-slot:actions>
+                <x-button label="Annuler" />
+                <x-button label="Sauvegarder" class="btn-primary" type="submit" spinner="saveProfile" />
+            </x-slot:actions>
+        </x-header>
+
+        <x-card subtitle="Basic information sur le profil" separator progress-indicator>
                 <x-input label="Nom du profile" wire:model.live="profileName" />
         
         </x-card>
 
-        <x-card title="Permissions" subtitle="Selectionner les actions pour ce profil" separator class="mt-3">
+        <x-card subtitle="Selectionner les actions pour ce profil" separator class="mt-3">
                             <div class="flex flex-col gap-4 text-on-surface dark:text-on-surface-dark">
                     @foreach($tree as $i => $module)
                         <div x-data="{ isExpanded: {{ $openModule === $i ? 'true' : 'false' }} }"
@@ -137,9 +146,9 @@ new class extends Component
                     @endforeach
                 </div>
                 
-        <x-slot:actions>
-            <x-button label="Annuler" />
-            <x-button label="Sauvegarder" class="btn-primary" type="submit" spinner="saveProfile" />
+            <x-slot:actions>
+                <x-button label="Annuler" />
+                <x-button label="Sauvegarder" class="btn-primary" type="submit" spinner="saveProfile" />
             </x-slot:actions>
         </x-card>
 
