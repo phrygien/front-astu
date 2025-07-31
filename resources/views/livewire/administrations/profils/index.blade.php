@@ -54,19 +54,19 @@ new class extends Component {
 }; ?>
 
 <div>
-    <x-header title="Profie" subtitle="Manage profiles" separator>
+    <x-header title="Profie" subtitle="Manage profil ASTUPARF" separator>
     <x-slot:middle class="!justify-end">
         <x-input icon="o-bolt" placeholder="Chercher profil..." />
     </x-slot:middle>
     <x-slot:actions>
         <div class="inline-flex gap-x-2">
-            <button class="join-item btn">1</button>
-            <button class="join-item btn">2</button>
-            <button class="join-item btn btn-disabled">...</button>
-            <button class="join-item btn">99</button>
-            <button class="join-item btn">100</button>
+            <button class="join-item btn btn-sm">1</button>
+            <button class="join-item btn btn-sm">2</button>
+            <button class="join-item btn btn-sm btn-disabled">...</button>
+            <button class="join-item btn btn-sm">99</button>
+            <button class="join-item btn btn-sm">100</button>
         </div>
-        <x-button icon="o-plus-circle" class="btn-primary" link="profil/create" />
+        <x-button icon="o-plus-circle" class="btn-primary btn-sm" link="profil/create" />
     </x-slot:actions>
 </x-header>
 
@@ -100,9 +100,9 @@ new class extends Component {
             </td>
             <td> {{ \Carbon\Carbon::parse($profil['created_at'])->format('d/m/Y H:i') }}</td>
             <td class="text-end px-6 py-3">
-                <a class="btn btn-active btn-primary" href="{{ route('profils.edit', $profil['id']) }}" wire:navigate>Details</a>
-                <button class="btn btn-dash btn-warning">Activer</button>
-                <button class="btn btn-dash btn-error">Desactiver</button>
+                <a class="btn btn-active btn-primary btn-sm" href="{{ route('profils.edit', $profil['id']) }}" wire:navigate>Details</a>
+                <button class="btn btn-dash btn-warning btn-sm">Activer</button>
+                <button class="btn btn-dash btn-error btn-sm">Desactiver</button>
             </td>
         </tr>
         @empty
@@ -123,11 +123,11 @@ new class extends Component {
     </div>
 
         <div class="inline-flex gap-x-2">
-            <button class="join-item btn">1</button>
-            <button class="join-item btn">2</button>
-            <button class="join-item btn btn-disabled">...</button>
-            <button class="join-item btn">99</button>
-            <button class="join-item btn">100</button>
+            <button class="join-item btn btn-sm">1</button>
+            <button class="join-item btn btn-sm">2</button>
+            <button class="join-item btn btn-sm btn-disabled">...</button>
+            <button class="join-item btn btn-sm">99</button>
+            <button class="join-item btn btn-sm">100</button>
         </div>
 </div>
 

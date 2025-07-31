@@ -110,11 +110,11 @@
                     <x-menu-item title="Produit Fournisseur" link="##" />
                 </x-menu-sub>
 
-                <x-menu-sub title="Gestion Magasin" icon="o-truck">
+                <x-menu-sub title="Gestion Magasin" icon="o-building-storefront">
                     <x-menu-item title="Magasin" link="##" />
                 </x-menu-sub>
 
-                <x-menu-sub title="Gestion Approvisionnement" icon="o-building-storefront">
+                <x-menu-sub title="Gestion Approvisionnement" icon="o-folder-open">
                     <x-menu-item title="Commande" link="##" />
                 </x-menu-sub>
 
