@@ -96,7 +96,7 @@
                 <x-menu-sub title="Administrations" icon="o-cog-6-tooth">
                     <x-menu-item title="Profil" link="/administrations/profils" />
                     <x-menu-item title="Creation d'un Profil" link="/administrations/profil/create" />
-                    <x-menu-item title="Utilisateur" link="##" />
+                    <x-menu-item title="Utilisateur" link="/administrations/users" />
                 </x-menu-sub>
 
                 <x-menu-sub title="Gestion produit" icon="o-shopping-bag">
