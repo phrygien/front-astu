@@ -13,7 +13,7 @@ new class extends Component {
             </x-slot:actions>
         </x-header>
         <div class="space-y-4">
-            <section id="stats" aria-labelledby="stats" class="grid grid-cols-6 gap-4">
+            <section id="stats" aria-labelledby="stats" class="grid grid-cols-1 lg:grid-cols-6 gap-4">
                 <x-stat title="Produits" value="13" icon="o-circle-stack" class="col-span-2"/>
                 <x-stat title="Out of stock" value="6" icon="o-server" class="col-span-2"/>
                 <x-stat title="Coomande" value="150" icon="o-briefcase" class="col-span-2" />

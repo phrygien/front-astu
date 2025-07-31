@@ -29,33 +29,32 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen font-sans antialiased bg-base-200">
-
-    {{-- NAVBAR mobile only --}}
-    <x-nav sticky class="lg:hidden">
+    <x-nav sticky full-width>
+ 
         <x-slot:brand>
-            <x-app-brand />
-        </x-slot:brand>
-        <x-slot:actions>
-            <label for="main-drawer" class="lg:hidden me-3">
+            <label for="main-drawer" class="lg:hidden mr-3">
                 <x-icon name="o-bars-3" class="cursor-pointer" />
             </label>
+            <x-app-brand class="px-5 pt-4" />
+        </x-slot:brand>
+
+        <x-slot:actions>
+            <x-button label="Messages" icon="o-envelope" link="###" class="btn-ghost btn-sm" responsive />
+            <x-button label="Notifications" icon="o-bell" link="###" class="btn-ghost btn-sm" responsive />
         </x-slot:actions>
     </x-nav>
 
-    {{-- MAIN --}}
     <x-main full-width>
-        {{-- SIDEBAR --}}
         <x-slot:sidebar drawer="main-drawer" collapsible class="bg-base-100 lg:bg-inherit">
 
             {{-- BRAND --}}
-            <x-app-brand class="px-5 pt-4" />
+            {{-- <x-app-brand class="px-5 pt-4" /> --}}
 
             {{-- MENU --}}
             <x-menu activate-by-route>
 
                 {{-- User --}}
                 @if($user)
-                    <x-menu-separator />
 
                     <x-list-item :item="$user" value="name" sub-value="email" no-separator no-hover class="-mx-2 !-my-2 rounded">
                         <x-slot:actions>
@@ -70,10 +69,32 @@
 
                 {{-- <x-menu-item title="Hello" icon="o-sparkles" link="/" /> --}}
                 
-                <x-menu-sub title="Administrations" icon="o-cog-6-tooth">
+                {{-- <x-menu-sub title="Administrations" icon="o-cog-6-tooth">
                     <x-menu-item title="Tous les profiles" icon="o-key" link="/administrations/profils" />
                     <x-menu-item title="Creation profile" icon="o-user" link="/administrations/profil/create" />
-                </x-menu-sub>
+                </x-menu-sub> --}}
+
+                <x-menu-separator />
+                <x-menu-item title="Profil" icon="o-cog-6-tooth" link="/administrations/profils" />
+                {{-- <x-menu-item title="Profil" icon="o-user" link="/administrations/profil/create" /> --}}
+                <x-menu-item title="Utilisateurs" icon="o-users" link="##" />
+
+                <x-menu-separator />
+                <x-menu-item title="Parkod" icon="o-calculator" link="##" />
+                <x-menu-item title="Marque" icon="o-tag" link="##" />
+                <x-menu-item title="Produit" icon="o-shopping-bag" link="##" />
+
+                <x-menu-separator />
+                <x-menu-item title="Fournisseur" icon="o-users" link="##" />
+                <x-menu-item title="Produit Fournisseur" icon="o-shopping-bag" link="##" />
+
+                <x-menu-separator />
+                <x-menu-item title="Magasin" icon="o-users" link="##" />
+
+                <x-menu-separator text="Gestion Approvisionnement" />
+                <x-menu-item title="Commande" icon="o-users" link="##" />
+
+
             </x-menu>
         </x-slot:sidebar>
 
