@@ -109,9 +109,6 @@ new class extends Component
                 <th>ARTICLE</th>
                 <th>REF_FABRI</th>
                 <th>EAN</th>
-                <th>PGHT_PARKOD</th>
-                <th>TVA</th>
-                <th>HS_CODE</th>
                 <th>ETAT</th>
                 <th>CREE LE</th>
                 <th class="text-end hidden md:table-cell">ACTION</th>
@@ -143,15 +140,7 @@ new class extends Component
                     <td>
                         <div class="h-4 w-32 bg-gray-200 dark:bg-neutral-800 rounded"></div>
                     </td>
-                    <td>
-                        <div class="h-4 w-32 bg-gray-200 dark:bg-neutral-800 rounded"></div>
-                    </td>
-                    <td>
-                        <div class="h-4 w-32 bg-gray-200 dark:bg-neutral-800 rounded"></div>
-                    </td>
-                    <td>
-                        <div class="h-4 w-32 bg-gray-200 dark:bg-neutral-800 rounded"></div>
-                    </td>
+
                     <td class="text-end">
                         <div class="flex justify-end gap-2">
                             <div class="h-8 w-16 bg-gray-200 dark:bg-neutral-800 rounded"></div>
@@ -172,9 +161,6 @@ new class extends Component
                     <th>{{ $product['article'] }}</th>
                     <th>{{ $product['ref_fabri_n_1'] }}</th>
                     <th>{{ $product['EAN'] }}</th>
-                    <th>{{ $product['pght_parkod']}}</th>
-                    <th>{{ $product['tva']}}</th>
-                    <th>{{ $product['hs_code']}}</th>
                     <td>
                         @if ($product['state'] == 1)
                             <span class="py-1 px-2 text-xs font-medium bg-green-100 text-green-800 rounded-full">
