@@ -90,7 +90,7 @@ new class extends Component
                 @endfor
             </div>
             
-            <x-button icon="o-plus-circle" class="btn-primary btn-sm" link="users/create" />
+            <x-button icon="o-cloud-arrow-down" class="btn-primary btn-sm" link="/gestion/produit/parkod" label="Charger PARKOD" />
         </x-slot:actions>
     </x-header>
 

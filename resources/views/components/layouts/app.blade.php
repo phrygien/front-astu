@@ -100,7 +100,7 @@
                 </x-menu-sub>
 
                 <x-menu-sub title="Gestion produit" icon="o-shopping-bag">
-                    <x-menu-item title="Parkod" link="##" />
+                    <x-menu-item title="Parkod" link="/gestion/produit/parkod" />
                     <x-menu-item title="Marque" link="##" />
                     <x-menu-item title="Produit" link="/gestion/produits" />
                 </x-menu-sub>
@@ -117,8 +117,6 @@
                 <x-menu-sub title="Gestion Approvisionnement" icon="o-folder-open">
                     <x-menu-item title="Commande" link="##" />
                 </x-menu-sub>
-
-
             </x-menu>
         </x-slot:sidebar>
 

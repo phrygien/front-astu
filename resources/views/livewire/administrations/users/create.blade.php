@@ -82,7 +82,7 @@ new class extends Component {
         </x-slot:actions> --}}
     </x-header>
 
-    <div class="max-w-4xl mx-auto">
+<div class="max-w-4xl mx-auto">
     <x-form wire:submit="save">
 
         <x-card subtitle="Basic information sur le profil" separator progress-indicator class="space-y">
