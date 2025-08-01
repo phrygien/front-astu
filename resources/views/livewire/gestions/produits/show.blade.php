@@ -1,172 +1,233 @@
 <?php
 
 use Livewire\Volt\Component;
+use Illuminate\Support\Facades\Http;
 
-new class extends Component {
-    //
-}; ?>
+new class extends Component
+{
+    public array $product = [];
+
+    public function mount(int $id): void
+    {
+        $token = session('token');
+
+        $response = Http::withToken($token)
+            ->get("http://dev.astucom.com:9038/erpservice/api/product/produit/{$id}");
+
+        if ($response->ok() && !$response['error']) {
+            $this->product = $response['data'];
+        } else {
+            $this->product = [];
+        }
+    }
+
+    public function with(): array
+    {
+        return [
+            'product' => $this->product,
+        ];
+    }
+};
+
+?>
 
 <div class="max-w-4xl mx-auto">
 
     <x-header title="Details" subtitle="Details du produit" separator>
+        <x-slot:actions>
+        <div class="breadcrumbs text-sm">
+            <ul>
+                <li><a href="{{ route('produits.index') }}" wire:navigate>Produit</a></li>
+                <li>...</li>
+                <li class="text-pink-800">{{ $product['designation'] }}</li>
+            </ul>
+        </div>
+        </x-slot:actions>
     </x-header>
 
-    <x-form wire:submit="save">
+    <x-card subtitle="Basic information" separator progress-indicator class="space-y">
 
-        <x-card subtitle="Basic information" separator progress-indicator class="space-y">
+        <div class="space-y-3">
 
-            <div class="space-y-3">
-
-            <dl class="flex flex-col sm:flex-row gap-1">
-                <dt class="min-w-40">
+        <dl class="flex flex-col sm:flex-row gap-1 items-start sm:items-center justify-between">
+            <dt class="min-w-80">
                 <span class="block text-sm text-gray-500 dark:text-neutral-500">Designation :</span>
-                </dt>
-                <dd>
+            </dt>
+            <dd class="w-full text-right">
                 <ul>
-                    <li class="me-1 after:content-[''] inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
-                     Figma
+                    <li class="inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
+                        {{ $product['designation'] ?? '-' }}
                     </li>
                 </ul>
-                </dd>
-            </dl>
+            </dd>
+        </dl>
 
-            <dl class="flex flex-col sm:flex-row gap-1">
-                <dt class="min-w-40">
-                <span class="block text-sm text-gray-500 dark:text-neutral-500">Designation Variant :</span>
-                </dt>
-                <dd>
+
+        <dl class="flex flex-col sm:flex-row gap-1 items-start sm:items-center justify-between">
+            <dt class="min-w-80">
+                <span class="block text-sm text-gray-500 dark:text-neutral-500">Designation Variant:</span>
+            </dt>
+            <dd class="w-full text-right">
                 <ul>
-                    <li class="me-1 after:content-[''] inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
-                     la valeur de designation variant vas afficher ici
+                    <li class="inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
+                        {{ $product['designation_variant'] ?? '-' }}
                     </li>
                 </ul>
-                </dd>
-            </dl>
+            </dd>
+        </dl>
 
-            <dl class="flex flex-col sm:flex-row gap-1">
-                <dt class="min-w-40">
+
+
+        <dl class="flex flex-col sm:flex-row gap-1 items-start sm:items-center justify-between">
+            <dt class="min-w-80">
                 <span class="block text-sm text-gray-500 dark:text-neutral-500">Article :</span>
-                </dt>
-                <dd>
+            </dt>
+            <dd class="w-full text-right">
                 <ul>
-                    <li class="me-1 after:content-[''] inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
-                     afficher la valeur de l'article ici
+                    <li class="inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
+                        {{ $product['article'] ?? '-' }}
                     </li>
                 </ul>
-                </dd>
-            </dl>
+            </dd>
+        </dl>
 
-            <dl class="flex flex-col sm:flex-row gap-1">
-                <dt class="min-w-40">
-                <span class="block text-sm text-gray-500 dark:text-neutral-500">ref_fabri_n_1 :</span>
-                </dt>
-                <dd>
+
+        <dl class="flex flex-col sm:flex-row gap-1 items-start sm:items-center justify-between">
+            <dt class="min-w-80">
+                <span class="block text-sm text-gray-500 dark:text-neutral-500">Reference de frabrication (PARKOD) :</span>
+            </dt>
+            <dd class="w-full text-right">
                 <ul>
-                    <li class="me-1 after:content-[''] inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
-                     valeur de reference fabri doivent afficher ici
+                    <li class="inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
+                        {{ $product['ref_fabri_n_1'] ?? '-' }}
                     </li>
                 </ul>
-                </dd>
-            </dl>
+            </dd>
+        </dl>
 
-            <dl class="flex flex-col sm:flex-row gap-1">
-                <dt class="min-w-40">
+        <dl class="flex flex-col sm:flex-row gap-1 items-start sm:items-center justify-between">
+            <dt class="min-w-80">
                 <span class="block text-sm text-gray-500 dark:text-neutral-500">EAN :</span>
-                </dt>
-                <dd>
+            </dt>
+            <dd class="w-full text-right">
                 <ul>
-                    <li class="me-1 after:content-[''] inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
-                     EAN valeur affiche ici apres
+                    <li class="inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
+                        {{ $product['EAN'] ?? '-' }}
                     </li>
                 </ul>
-                </dd>
-            </dl>
+            </dd>
+        </dl>
 
-            <dl class="flex flex-col sm:flex-row gap-1">
-                <dt class="min-w-40">
-                <span class="block text-sm text-gray-500 dark:text-neutral-500">pght_parkod :</span>
-                </dt>
-                <dd>
+
+        <dl class="flex flex-col sm:flex-row gap-1 items-start sm:items-center justify-between">
+            <dt class="min-w-80">
+                <span class="block text-sm text-gray-500 dark:text-neutral-500">Prix de gros HT ( PARKOD ) :</span>
+            </dt>
+            <dd class="w-full text-right">
                 <ul>
-                    <li class="me-1 after:content-[''] inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
-                     pght_parkod value ici
+                    <li class="inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
+                        {{ $product['pght_parkod'] ?? '-' }}
                     </li>
                 </ul>
-                </dd>
-            </dl>
+            </dd>
+        </dl>
 
-
-            <dl class="flex flex-col sm:flex-row gap-1">
-                <dt class="min-w-40">
-                <span class="block text-sm text-gray-500 dark:text-neutral-500">TVA :</span>
-                </dt>
-                <dd>
+        <dl class="flex flex-col sm:flex-row gap-1 items-start sm:items-center justify-between">
+            <dt class="min-w-40">
+                <span class="block text-sm text-gray-500 dark:text-neutral-500">TVA ( 1 = 20 %):</span> 
+            </dt>
+            <dd class="w-full text-right">
                 <ul>
-                    <li class="me-1 after:content-[''] inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
-                     tva value was display here
+                    <li class="inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
+                        {{ $product['tva'] ?? '-' }}
                     </li>
                 </ul>
-                </dd>
-            </dl>
+            </dd>
+        </dl>
 
-            <dl class="flex flex-col sm:flex-row gap-1">
-                <dt class="min-w-40">
-                <span class="block text-sm text-gray-500 dark:text-neutral-500">Devise:</span>
-                </dt>
-                <dd>
+
+        <dl class="flex flex-col sm:flex-row gap-1 items-start sm:items-center justify-between">
+            <dt class="min-w-40">
+                <span class="block text-sm text-gray-500 dark:text-neutral-500">Devise :</span>
+            </dt>
+            <dd class="w-full text-right">
                 <ul>
-                    <li class="me-1 after:content-[''] inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
-                     EUR
+                    <li class="inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
+                        {{ $product['devise'] ?? '-' }}
                     </li>
                 </ul>
-                </dd>
-            </dl>
+            </dd>
+        </dl>
 
-
-            <dl class="flex flex-col sm:flex-row gap-1">
-                <dt class="min-w-40">
-                <span class="block text-sm text-gray-500 dark:text-neutral-500">hs_code:</span>
-                </dt>
-                <dd>
+        <dl class="flex flex-col sm:flex-row gap-1 items-start sm:items-center justify-between">
+            <dt class="min-w-40">
+                <span class="block text-sm text-gray-500 dark:text-neutral-500">Statut PARKOD :</span>
+            </dt>
+            <dd class="w-full text-right">
                 <ul>
-                    <li class="me-1 after:content-[''] inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
-                     code_hs 54545456
+                    <li class="inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
+                        {{ $product['statut_parkod'] ?? '-' }}
                     </li>
                 </ul>
-                </dd>
-            </dl>
+            </dd>
+        </dl>
+
+        <dl class="flex flex-col sm:flex-row gap-1 items-start sm:items-center justify-between">
+            <dt class="min-w-40">
+                <span class="block text-sm text-gray-500 dark:text-neutral-500">Date de creation :</span>
+            </dt>
+            <dd class="w-full text-right">
+                <ul>
+                    <li class="inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
+                        {{ \Carbon\Carbon::parse($product['created_at'])->locale('fr')->isoFormat('LL') }}
+                    </li>
+                </ul>
+            </dd>
+        </dl>
 
 
-            </div>
+        <dl class="flex flex-col sm:flex-row gap-1 items-start sm:items-center justify-between">
+            <dt class="min-w-40">
+                <span class="block text-sm text-gray-500 dark:text-neutral-500">Dernier modification :</span>
+            </dt>
+            <dd class="w-full text-right">
+                <ul>
+                    <li class="inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
+                       {{ \Carbon\Carbon::parse($product['updated_at'])->locale('fr')->isoFormat('LL') }}
 
-        </x-card>
-
-        <x-card subtitle="Information sur le code" separator progress-indicator class="space-y mt-3">
-
-        
-            <div class="overflow-x-auto">
-                <table class="table">
-                    <!-- head -->
-                    <thead>
-                    <tr>
-                        <th>Code produit</th>
-                        <th>Code Marque</th>
-                        <th>Code Categorie</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <th>1</th>
-                        <td>Cy Ganderton</td>
-                        <td>Quality Control Specialist</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-        </x-card>
+                    </li>
+                </ul>
+            </dd>
+        </dl>
 
 
-    </x-form>
+        </div>
+
+    </x-card>
+
+    <x-card subtitle="Information sur le code" separator progress-indicator class="space-y mt-3">
+
+    
+        <div class="overflow-x-auto">
+            <table class="table">
+                <!-- head -->
+                <thead>
+                <tr>
+                    <th class="text-center">Code produit</th>
+                    <th class="text-center">Code Marque</th>
+                    <th class="text-center">Code Categorie</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th class="text-end">{{ $product['product_code'] ?? '-'}}</th>
+                    <td class="text-end">{{ $product['marque_code'] ?? '-'}}</td>
+                    <td class="text-end">{{ $product['categorie_code'] ?? '-'}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </x-card>
 </div>
 

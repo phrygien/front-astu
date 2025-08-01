@@ -195,7 +195,7 @@ new class extends Component
                 @empty
                 <tr x-show="!showSkeleton" x-transition.opacity.duration.1000ms>
                     <td colspan="4" class="px-6 py-4 text-center text-gray-500 dark:text-neutral-500">
-                        Aucun profil trouvé.
+                        Aucun produit trouvé, verifier votre connexion .
                     </td>
                 </tr>
                 @endforelse
