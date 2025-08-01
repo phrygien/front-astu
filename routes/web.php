@@ -46,6 +46,7 @@ Route::middleware(['jwt-session-auth'])->group( function(): void {
         // gestion produit
         Volt::route('/produits','gestions.produits.index')->name('produits.index');
         Volt::route('/produit/parkod','gestions.produits.parkod')->name('produits.parkod');
+        Volt::route('/produit/{id}/show','gestions.produits.show')->name('produits.show');
     });
 
 });
