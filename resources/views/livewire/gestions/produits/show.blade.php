@@ -47,6 +47,26 @@ new class extends Component
 
     <x-card subtitle="Basic information" separator progress-indicator class="space-y">
 
+        <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 mt-3 mb-3">
+            <table class="table">
+                <!-- head -->
+                <thead>
+                <tr>
+                    <th class="text-end">Code produit</th>
+                    <th class="text-end">Code Marque</th>
+                    <th class="text-end">Code Categorie</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th class="text-end">{{ $product['product_code'] ?? '-'}}</th>
+                    <td class="text-end">{{ $product['marque_code'] ?? '-'}}</td>
+                    <td class="text-end">{{ $product['categorie_code'] ?? '-'}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
         <div class="space-y-3">
 
         <dl class="flex flex-col sm:flex-row gap-1 items-start sm:items-center justify-between">
@@ -202,32 +222,7 @@ new class extends Component
 
 
         </div>
-
     </x-card>
 
-    <x-card subtitle="Information sur le code" separator progress-indicator class="space-y mt-3">
-
-    
-        <div class="overflow-x-auto">
-            <table class="table">
-                <!-- head -->
-                <thead>
-                <tr>
-                    <th class="text-center">Code produit</th>
-                    <th class="text-center">Code Marque</th>
-                    <th class="text-center">Code Categorie</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th class="text-end">{{ $product['product_code'] ?? '-'}}</th>
-                    <td class="text-end">{{ $product['marque_code'] ?? '-'}}</td>
-                    <td class="text-end">{{ $product['categorie_code'] ?? '-'}}</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-
-    </x-card>
 </div>
 

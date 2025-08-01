@@ -8,7 +8,7 @@ new class extends Component
     public int $page = 1;
     public array $products = [];
     public int $totalPages = 1;
-    public int $perPage = 50;
+    public int $perPage = 10;
 
 
     public string $sortField = 'created_at';
@@ -180,7 +180,7 @@ new class extends Component
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                             </svg>
                         </a>
-                        <a class="btn btn-dash btn-warning btn-sm" href="##">
+                        <a class="btn btn-dash btn-warning btn-sm" href="{{ route('produits.edit', $product['id']) }}" wire:navigate>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
                                 <path d="m2.695 14.762-1.262 3.155a.5.5 0 0 0 .65.65l3.155-1.262a4 4 0 0 0 1.343-.886L17.5 5.501a2.121 2.121 0 0 0-3-3L3.58 13.419a4 4 0 0 0-.885 1.343Z" />
                             </svg>
