@@ -10,6 +10,11 @@ new class extends Component
     public int $totalPages = 1;
     public int $perPage = 50;
 
+
+    public string $sortField = 'created_at';
+    public string $sortDirection = 'desc';
+
+
     public function mount(): void
     {
         $this->fetchProducts();

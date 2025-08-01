@@ -2,7 +2,6 @@
 
 use Livewire\Volt\Volt;
 
-Volt::route('/', 'users.index');
 
 /**
  * @see https://github.com/robsontenorio/laravel-volt
@@ -15,7 +14,11 @@ Volt::route('/login', 'auth.login')->name('auth.login');
  */
 Route::middleware(['jwt-session-auth'])->group( function(): void {
 
+    /**
+     * Dashboard
+     */
 
+    Volt::route('/', 'plateforme.dashboard.dashboard');
     /**
      * @see https://github.com/robsontenorio/laravel-volt
      */
