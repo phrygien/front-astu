@@ -13,7 +13,7 @@ new class extends Component
     public int $page = 1;
     public array $products = [];
     public int $totalPages = 1;
-    public int $perPage = 20;
+    public int $perPage = 30;
     public bool $showDrawer3 = false;
 
 
@@ -66,7 +66,7 @@ new class extends Component
         $token = session('token');
 
         if (!$this->file) {
-            $this->warning('Aucun fichier sélectionné.');
+            $this->warning('Aucun fichier PARKOD sélectionné.');
             return;
         }
 
