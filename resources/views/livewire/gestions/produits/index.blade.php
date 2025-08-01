@@ -1,19 +1,27 @@
 <?php
 
 use Livewire\Volt\Component;
+use Livewire\WithFileUploads;
+use Mary\Traits\Toast;
 use Illuminate\Support\Facades\Http;
 
 new class extends Component
 {
+    use WithFileUploads;
+    use Toast;
+
     public int $page = 1;
     public array $products = [];
     public int $totalPages = 1;
-    public int $perPage = 10;
+    public int $perPage = 20;
+    public bool $showDrawer3 = false;
 
 
     public string $sortField = 'created_at';
     public string $sortDirection = 'desc';
 
+
+    public $file;
 
     public function mount(): void
     {
@@ -50,6 +58,41 @@ new class extends Component
         if ($page > 0 && $page <= $this->totalPages) {
             $this->page = $page;
             $this->fetchProducts();
+        }
+    }
+
+    public function loadParkod()
+    {
+        $token = session('token');
+
+        if (!$this->file) {
+            $this->warning('Aucun fichier sélectionné.');
+            return;
+        }
+
+        try {
+            $fileContents = file_get_contents($this->file->getRealPath());
+
+            $base64File = base64_encode($fileContents);
+
+            $mimeType = $this->file->getMimeType();
+            $encodedFile = "data:{$mimeType};base64,{$base64File}";
+            //$encodedFile = "data:{data:text\/csv;base64,{$base64File}";
+
+
+            $response = Http::withToken($token)->post('http://dev.astucom.com:9038/erpservice/api/product/parkod_upload', [
+                'file' => $encodedFile,
+            ]);
+
+            if ($response->successful()) {
+                $this->success('Fichier PARKOD chargé avec succès.');
+                $this->fetchProducts();
+            } else {
+                $this->success('Échec de l\'envoi : ' . $response->body());
+            }
+
+        } catch (\Exception $e) {
+            $this->warning('Erreur lors du chargement : ' . $e->getMessage());
         }
     }
 
@@ -95,7 +138,8 @@ new class extends Component
                 @endfor
             </div>
             
-            <x-button icon="o-cloud-arrow-down" class="btn-primary btn-sm" link="/gestion/produit/parkod" label="Charger PARKOD" />
+            <x-button icon="o-cloud-arrow-down" class="btn-primary btn-sm" @click="$wire.showDrawer3 = true" label="Charger PARKOD" />
+            
         </x-slot:actions>
     </x-header>
 
@@ -225,4 +269,40 @@ new class extends Component
         </div>
 
     </div>
+    <x-form wire:submit="loadParkod">
+
+    <x-drawer
+        wire:model="showDrawer3"
+        with-close-button
+        close-on-escape
+        class="w-11/12 lg:w-1/3"
+        right
+    >
+
+    <x-header title="PARKOD" subtitle="Charger le fichier PARKOD pour ASTUPARF" separator progress-indicator="loadParkod">
+    </x-header>
+
+            <div class="col-span-full">
+                {{-- <label for="cover-photo" class="block text-sm/6 font-medium text-gray-900">PARKOD File</label> --}}
+                <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+                    <div class="text-center">
+                    <div class="mt-4 flex text-sm/6 text-gray-600">
+                        <label for="file-upload" class="relative cursor-pointer rounded-md bg-white font-semibold text-pink-600 focus-within:ring-2 focus-within:ring-pink-600 focus-within:ring-offset-2 focus-within:outline-hidden hover:text-pink-500">
+                        <span>Uploader le fichier</span>
+                        <input id="file-upload" type="file" name="file" class="sr-only" wire:model="file" />
+                        </label>
+                        <p class="pl-1">or drag and drop</p>
+                    </div>
+                    <p class="text-xs/5 text-gray-600">TXT up to 10MB</p>
+                    </div>
+                </div>
+            </div>
+    
+        <x-slot:actions>
+            <x-button label="Abandoner" @click="$wire.showDrawer3 = false" />
+            <x-button label="Executer" class="btn-primary" type="submit" spinner="loadParkod" />
+        </x-slot:actions>
+    </x-drawer>
+
+    </x-form>
 </div>
