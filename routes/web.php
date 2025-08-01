@@ -35,4 +35,13 @@ Route::middleware(['jwt-session-auth'])->group( function(): void {
     Volt::route('/administrations/users','administrations.users.index')->name('users.index');
     Volt::route('/administrations/users/create', 'administrations.users.create')->name('users.create');
 
+    /**
+     * Routes pour la gestion
+     */
+    Route::prefix('gestion')->group(function(): void {
+
+        // gestion produit
+        Volt::route('/produits','gestions.produits.index')->name('produits.index');
+    });
+
 });

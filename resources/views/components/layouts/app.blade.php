@@ -102,7 +102,7 @@
                 <x-menu-sub title="Gestion produit" icon="o-shopping-bag">
                     <x-menu-item title="Parkod" link="##" />
                     <x-menu-item title="Marque" link="##" />
-                    <x-menu-item title="Produit" link="##" />
+                    <x-menu-item title="Produit" link="/gestion/produits" />
                 </x-menu-sub>
 
                 <x-menu-sub title="Gestion Fournisseur" icon="o-truck">

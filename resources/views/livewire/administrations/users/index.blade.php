@@ -151,16 +151,16 @@ new class extends Component {
     </div>
 
     <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200 dark:border-neutral-700">
-    <div>
-        <flux:input icon="magnifying-glass" placeholder="Chercher profil" />
-    </div>
-
-        <div class="inline-flex gap-x-2">
-            <button class="join-item btn btn-sm">1</button>
-            <button class="join-item btn btn-sm">2</button>
-            <button class="join-item btn btn-sm btn-disabled">...</button>
-            <button class="join-item btn btn-sm">99</button>
-            <button class="join-item btn btn-sm">100</button>
+        <div>
+            <flux:input icon="magnifying-glass" placeholder="Chercher profil" />
         </div>
-</div>
+
+            <div class="inline-flex gap-x-2">
+                <button class="join-item btn btn-sm">1</button>
+                <button class="join-item btn btn-sm">2</button>
+                <button class="join-item btn btn-sm btn-disabled">...</button>
+                <button class="join-item btn btn-sm">99</button>
+                <button class="join-item btn btn-sm">100</button>
+            </div>
+    </div>
 </div>
