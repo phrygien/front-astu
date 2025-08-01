@@ -48,6 +48,14 @@ Route::middleware(['jwt-session-auth'])->group( function(): void {
         Volt::route('/produit/parkod','gestions.produits.parkod')->name('produits.parkod');
         Volt::route('/produit/{id}/show','gestions.produits.show')->name('produits.show');
         Volt::route('/produit/{id}/edit','gestions.produits.edit')->name('produits.edit');
+
+        /**
+         * gestion marque
+         */
+        Volt::route('/marque','gestions.marques.index')->name('marques.index');
+        Volt::route('/marque/create','gestions.marques.create')->name('marque.create');
+        Volt::route('/marque/{id}/edit','gestions.marques.edit')->name('marque.edit');
+
     });
 
 });
