@@ -59,7 +59,7 @@ new class extends Component
 };
 ?>
 <div>
-    <x-header title="Produits" subtitle="Gerer les produits ASTUPARF" separator>
+    <x-header title="Produits" subtitle="Gerer les produits ASTUPARF" separator progress-indicator>
         <x-slot:middle class="!justify-end">
             <x-input icon="o-bolt" placeholder="Chercher ..." />
         </x-slot:middle>
@@ -68,12 +68,13 @@ new class extends Component
         <fieldset class="fieldset">
             <select class="select" wire:model.live="perPage">
                 <option disabled selected>Afficher par</option>
-                <option>50</option>
-                <option>100</option>
-                <option>150</option>
-                <option>200</option>
-                <option>250</option>
-                <option>300</option>
+                <option value="10">10</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="150">150</option>
+                <option value="200">200</option>
+                <option value="250">250</option>
+                <option value="300">300</option>
             </select>
             </fieldset>
 
