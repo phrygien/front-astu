@@ -33,7 +33,7 @@ new class extends Component
 
 <div class="max-w-4xl mx-auto">
 
-    <x-header title="Details" subtitle="Details du produit" separator>
+    <x-header title="Détails " subtitle="Détails du produit" separator>
         <x-slot:actions>
         <div class="breadcrumbs text-sm">
             <ul>
@@ -89,7 +89,7 @@ new class extends Component
 
         <dl class="flex flex-col sm:flex-row gap-1 items-start sm:items-center justify-between">
             <dt class="min-w-80">
-                <span class="block text-sm text-gray-500 dark:text-neutral-500">Designation :</span>
+                <span class="block text-sm text-gray-500 dark:text-neutral-500">Désignation :</span>
             </dt>
             <dd class="w-full text-right">
                 <ul>
@@ -103,7 +103,7 @@ new class extends Component
 
         <dl class="flex flex-col sm:flex-row gap-1 items-start sm:items-center justify-between">
             <dt class="min-w-80">
-                <span class="block text-sm text-gray-500 dark:text-neutral-500">Designation Variant:</span>
+                <span class="block text-sm text-gray-500 dark:text-neutral-500">Désignation Variante:</span>
             </dt>
             <dd class="w-full text-right">
                 <ul>
@@ -132,7 +132,7 @@ new class extends Component
 
         <dl class="flex flex-col sm:flex-row gap-1 items-start sm:items-center justify-between">
             <dt class="min-w-80">
-                <span class="block text-sm text-gray-500 dark:text-neutral-500">Reference de frabrication (PARKOD) :</span>
+                <span class="block text-sm text-gray-500 dark:text-neutral-500">Référence de fabrication (PARKOD) :</span>
             </dt>
             <dd class="w-full text-right">
                 <ul>
@@ -198,8 +198,8 @@ new class extends Component
         </dl>
 
         <dl class="flex flex-col sm:flex-row gap-1 items-start sm:items-center justify-between">
-            <dt class="min-w-40">
-                <span class="block text-sm text-gray-500 dark:text-neutral-500">Statut PARKOD :</span>
+            <dt class="min-w-80">
+                <span class="block text-sm text-gray-500 dark:text-neutral-500">État actuel de PARKOD :</span>
             </dt>
             <dd class="w-full text-right">
                 <ul>
@@ -212,7 +212,7 @@ new class extends Component
 
         <dl class="flex flex-col sm:flex-row gap-1 items-start sm:items-center justify-between">
             <dt class="min-w-40">
-                <span class="block text-sm text-gray-500 dark:text-neutral-500">Date de creation :</span>
+                <span class="block text-sm text-gray-500 dark:text-neutral-500">Date de création :</span>
             </dt>
             <dd class="w-full text-right">
                 <ul>
@@ -226,7 +226,7 @@ new class extends Component
 
         <dl class="flex flex-col sm:flex-row gap-1 items-start sm:items-center justify-between">
             <dt class="min-w-40">
-                <span class="block text-sm text-gray-500 dark:text-neutral-500">Dernier modification :</span>
+                <span class="block text-sm text-gray-500 dark:text-neutral-500">Dernière modification :</span>
             </dt>
             <dd class="w-full text-right">
                 <ul>

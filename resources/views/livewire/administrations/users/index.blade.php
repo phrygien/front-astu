@@ -135,6 +135,7 @@ new class extends Component {
                         <button class="btn btn-dash btn-error btn-sm">Desactiver</button>
                     </td>
                 </tr>
+
                 @empty
                 <tr x-show="!showSkeleton" x-transition.opacity.duration.1000ms>
                     <td colspan="4" class="px-6 py-4 text-center text-gray-500 dark:text-neutral-500">
