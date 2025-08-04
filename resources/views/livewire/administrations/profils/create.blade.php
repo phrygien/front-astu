@@ -33,7 +33,7 @@ new class extends Component
     public function fetchTree()
     {
         $response = Http::withToken($this->token)
-            ->get('http://dev.astucom.com:9038/erpservice/api/admin/listactionwithtree');
+            ->get(config('services.jwt.profile_endpoint') . '/admin/listactionwithtree');
 
         if ($response->ok()) {
             $this->tree = $response['data'];
@@ -65,7 +65,7 @@ new class extends Component
         ];
 
         $response = Http::withToken($this->token)
-            ->post('http://dev.astucom.com:9038/erpservice/api/admin/profil', $payload);
+            ->post(config('services.jwt.profile_endpoint') . '/admin/profil', $payload);
 
         if ($response->ok() && !$response['error']) {
             $this->success('Profil sauvegardé avec succès');

@@ -56,7 +56,7 @@ new class extends Component {
 
 <div class="max-w-4xl mx-auto">
 
-    <x-header title="PARKOD" subtitle="Charger le fichier PARKOD pour ASTUPARF" separator>
+    <x-header title="PARKOD" subtitle="Charger le fichier PARKOD sur ASTUPARF" separator>
     </x-header>
 
     <x-form wire:submit="save">

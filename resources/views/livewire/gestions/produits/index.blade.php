@@ -38,11 +38,8 @@ new class extends Component
     {
         $token = session('token');
 
-        // $response = Http::withToken($token)
-        //     ->get("http://dev.astucom.com:9038/erpservice/api/product/produit?page={$this->page}");
-
         $response = Http::withToken($token)
-            ->get("http://dev.astucom.com:9038/erpservice/api/product/produit", [
+            ->get(config('services.jwt.profile_endpoint') . '/product/produit', [
                 'page' => $this->page,
                 'per_page' => $this->perPage
             ]);
@@ -159,7 +156,7 @@ new class extends Component
             </tr>
             </thead>
 
-            <tbody x-data="{ showSkeleton: true }" x-init="setTimeout(() => showSkeleton = false, 5000)">
+            <tbody x-data="{ showSkeleton: true }" x-init="setTimeout(() => showSkeleton = false, 2000)">
                 {{-- Skeleton visible pendant 5 secondes --}}
                 @for ($i = 0; $i < 10; $i++)
                 <tr x-show="showSkeleton" class="animate-pulse">
@@ -279,7 +276,7 @@ new class extends Component
         right
     >
 
-    <x-header title="PARKOD" subtitle="Charger le fichier PARKOD pour ASTUPARF" separator progress-indicator="loadParkod">
+    <x-header title="PARKOD" subtitle="Charger le fichier PARKOD sur ASTUPARF" separator progress-indicator="loadParkod">
     </x-header>
 
             <div class="col-span-full">
@@ -299,7 +296,7 @@ new class extends Component
             </div>
     
         <x-slot:actions>
-            <x-button label="Abandoner" @click="$wire.showDrawer3 = false" />
+            <x-button label="Annuler" @click="$wire.showDrawer3 = false" />
             <x-button label="Executer" class="btn-primary" type="submit" spinner="loadParkod" />
         </x-slot:actions>
     </x-drawer>

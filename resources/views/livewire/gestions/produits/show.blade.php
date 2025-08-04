@@ -47,25 +47,43 @@ new class extends Component
 
     <x-card subtitle="Basic information" separator progress-indicator class="space-y">
 
-        <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 mt-3 mb-3">
-            <table class="table">
-                <!-- head -->
-                <thead>
-                <tr>
-                    <th class="text-end">Code produit</th>
-                    <th class="text-end">Code Marque</th>
-                    <th class="text-end">Code Categorie</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th class="text-end">{{ $product['product_code'] ?? '-'}}</th>
-                    <td class="text-end">{{ $product['marque_code'] ?? '-'}}</td>
-                    <td class="text-end">{{ $product['categorie_code'] ?? '-'}}</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+<div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 mt-3 mb-3 p-4">
+  <div class="flex flex-col md:flex-row items-center gap-6">
+    
+    <!-- SVG: Bouteille de parfum -->
+    <div class="flex-shrink-0">
+      <svg width="120" height="200" viewBox="0 0 120 200" xmlns="http://www.w3.org/2000/svg">
+        <rect x="45" y="10" width="30" height="20" fill="#999" rx="5" />
+        <rect x="50" y="30" width="20" height="20" fill="#bbb" rx="3" />
+        <path d="M40 50 Q30 100 30 150 Q30 180 60 190 Q90 180 90 150 Q90 100 80 50 Z" fill="#ddd" stroke="#aaa" stroke-width="2"/>
+        <rect x="45" y="100" width="30" height="20" fill="#ccc" stroke="#aaa" stroke-width="1" />
+        <text x="60" y="115" text-anchor="middle" font-size="8" fill="#666">PARFUM</text>
+      </svg>
+    </div>
+
+    <!-- Tableau des informations produit -->
+    <div class="overflow-x-auto w-full">
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="text-end">Code produit</th>
+            <th class="text-end">Code Marque</th>
+            <th class="text-end">Code Catégorie</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th class="text-end">{{ $product['product_code'] ?? '-'}}</th>
+            <td class="text-end">{{ $product['marque_code'] ?? '-'}}</td>
+            <td class="text-end">{{ $product['categorie_code'] ?? '-'}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+  </div>
+</div>
+
 
         <div class="space-y-3">
 

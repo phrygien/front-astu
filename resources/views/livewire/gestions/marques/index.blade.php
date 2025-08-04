@@ -1,9 +1,50 @@
 <?php
 
+use Mary\Traits\Toast;
+use Livewire\Attributes\Validate;
 use Livewire\Volt\Component;
 
 new class extends Component {
-    //
+    use Toast;
+
+    public bool $myModal1 = false;
+
+    #[Validate('required', message: 'Code marque obligatoire')]
+    #[Validate('min:3', message: 'Le champ CODE doit contenir 3 caractères maximum')]
+    #[Validate('max:3', message: 'Le champ CODE doit contenir 3 caractères maximum')]
+    public string $code = '';
+
+    #[Validate('required', message: 'Libelle marque obligatoire')]
+    public string $name = '';
+
+    public $token;
+
+    public function mount(): void {
+        $this->token = session('token');
+    }
+
+    public function save()
+    {
+        $this->validate();
+
+        $payload = [
+            'code' => $this->code,
+            'name' => $this->name
+        ];
+
+        $response = Http::withToken($this->token)
+            ->post(config('services.jwt.profile_endpoint') . '/product/marque', $payload);
+
+        if ($response->ok() && !$response['error']) {
+            $this->success('Marque sauvegardé avec succès');
+            $this->reset(['code', 'name']);
+            $this->selectedActions = [];
+        } else {
+            $this->error('Erreur lors de la sauvegarde du marque.');
+        }
+
+    }
+
 }; ?>
 
 <div>
@@ -40,7 +81,7 @@ new class extends Component {
                 @endfor
             </div>
              --}}
-            <x-button icon="o-cloud-arrow-down" class="btn-primary btn-sm" @click="$wire.showDrawer3 = true" label="Ajouter marque" />
+            <x-button icon="o-cloud-arrow-down" class="btn-primary btn-sm" @click="$wire.myModal1 = true" label="Créer une marque" />
             
         </x-slot:actions>
     </x-header>
@@ -74,5 +115,18 @@ new class extends Component {
 
 
 
+
+    <x-modal wire:model="myModal1" title="Création de marque" class="backdrop-blur">
+
+        <x-form wire:submit="save">
+            <x-input label="Code Marque" wire:model="code" hint="Exemple: 001" />
+            <x-input label="Libelle" wire:model="name" placeholder="" />
+        
+            <x-slot:actions>
+                <x-button label="Annuler" @click="$wire.myModal1 = false" />
+                <x-button label="Sauvegarder" class="btn-primary" type="submit" spinner="save" />
+            </x-slot:actions>
+        </x-form>
+    </x-modal>
 
 </div>
