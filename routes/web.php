@@ -57,6 +57,13 @@ Route::middleware(['jwt-session-auth'])->group( function(): void {
         Volt::route('/marque/create','gestions.marques.create')->name('marque.create');
         Volt::route('/marque/{id}/edit','gestions.marques.edit')->name('marque.edit');
 
+        /**
+         * gestion fournisseurs
+         */
+        Volt::route('/fournisseurs','gestions.fournisseurs.index')->name('fournisseurs.index');
+        Volt::route('/fournisseurs/create','gestions.fournisseurs.create')->name('fournisseurs.create');
+        Volt::route('/fournisseurs/{id}/view','gestions.fournisseurs.view')->name('fournisseurs.view');
+        Volt::route('/fournisseurs/{id}/edit','gestions.fournisseurs.edit')->name('fournisseurs.edit');
     });
 
 });

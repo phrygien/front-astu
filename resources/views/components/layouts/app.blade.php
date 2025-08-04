@@ -106,7 +106,7 @@
                 </x-menu-sub>
 
                 <x-menu-sub title="Gestion Fournisseur" icon="o-truck">
-                    <x-menu-item title="Fournisseur" link="##" />
+                    <x-menu-item title="Fournisseur" link="/gestion/fournisseurs" />
                     <x-menu-item title="Produit Fournisseur" link="##" />
                 </x-menu-sub>
 
