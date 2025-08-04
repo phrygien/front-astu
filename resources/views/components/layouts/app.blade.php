@@ -43,6 +43,7 @@
         </x-slot:brand>
 
         <x-slot:actions>
+            
             <x-button label="Notifications" icon="o-bell" link="###" class="btn-ghost btn-sm" responsive />
              <div class="flex gap-2">
                 <div class="dropdown dropdown-end">
@@ -107,6 +108,7 @@
 
                 <x-menu-sub title="Gestion Fournisseur" icon="o-truck">
                     <x-menu-item title="Fournisseur" link="/gestion/fournisseurs" />
+                    <x-menu-item title="Fournisseur" link="/gestion/fournisseurs/create" />
                     <x-menu-item title="Produit Fournisseur" link="##" />
                 </x-menu-sub>
 
