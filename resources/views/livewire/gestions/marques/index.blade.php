@@ -93,12 +93,12 @@ new class extends Component {
 
 <div>
 
-    <div class="max-w-7xl mx-auto">
         <x-header title="Marque" subtitle="Tous les marques" separator progress-indicator>
             <x-slot:middle class="!justify-end">
                 <x-input icon="o-bolt" placeholder="Chercher ..." />
             </x-slot:middle>
             <x-slot:actions>
+            <x-button icon="o-funnel" />
 
             <fieldset class="fieldset">
                 <select class="select" wire:model.live="perPage">
@@ -237,7 +237,7 @@ new class extends Component {
 
         </div>
 
-    </div>
+
 
     <x-modal wire:model="myModal1" title="Création de marque" class="backdrop-blur">
 
