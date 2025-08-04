@@ -12,7 +12,7 @@ new class extends Component {
     public int $page = 1;
     public array $marques = [];
     public int $totalPages = 1;
-    public int $perPage = 10;
+    public int $perPage = 20;
 
     #[Validate('required', message: 'Code marque obligatoire')]
     #[Validate('min:3', message: 'Le champ CODE doit contenir 3 caractères maximum')]
@@ -145,7 +145,7 @@ new class extends Component {
 
                 <tbody x-data="{ showSkeleton: true }" x-init="setTimeout(() => showSkeleton = false, 2000)">
                     {{-- Skeleton visible pendant 5 secondes --}}
-                    @for ($i = 0; $i < 10; $i++)
+                    @for ($i = 0; $i < 20; $i++)
                     <tr x-show="showSkeleton" class="animate-pulse">
                         <th>
                             <div class="h-4 w-24 bg-gray-200 dark:bg-neutral-800 rounded"></div>
