@@ -72,7 +72,7 @@ new class extends Component {
 
 }; ?>
 
-<div class="p-8">
+<div class="max-w-4xl mx-auto">
 
     <x-header title="Creation utilisateur" subtitle="Ajouter un tulisateur WINPARF" separator>
 
@@ -104,7 +104,7 @@ new class extends Component {
             </fieldset>
 
             <x-slot:actions>
-                <x-button label="Annuler" />
+                <x-button label="Annuler" link="/administrations/users" />
                 <x-button label="Sauvergarder" class="btn-primary" type="submit" spinner="save" />
             </x-slot:actions>
         </x-card>

@@ -1,12 +1,15 @@
 <?php
 
 use Livewire\Volt\Component;
+use Mary\Traits\Toast;
 use Illuminate\Support\Facades\Http;
 
 new class extends Component {
     
     public $profils = [];
     public bool $myModal1 = false;
+       public bool $myModal2 = false;
+
     public bool $loading = true;
     public bool $showSkeleton = true;
 
@@ -14,10 +17,14 @@ new class extends Component {
     public int $page = 1;
     public array $users = [];
     public int $totalPages = 1;
-    public int $perPage = 30;
+    public int $perPage = 10;
 
     public string $sortField = 'created_at';
     public string $sortDirection = 'desc';
+
+    public $selectedUserId = null;
+
+    use Toast;
 
     public function mount(): void
     {
@@ -52,6 +59,52 @@ new class extends Component {
         }
     }
 
+    public function activer()
+    {
+        $token = session('token');
+
+        $response = Http::withToken($token)
+            ->get("http://dev.astucom.com:9038/erpservice/api/admin/user/{$this->selectedUserId}/state/1");
+
+        if ($response->ok() && !$response['error']) {
+            $this->success('Activation utilisateur avec succès');
+            $this->myModal1 = false;
+            $this->fetchUsers();
+        } else {
+            $this->error("Erreur lors de l'activation.");
+        }
+    }
+
+    public function desactiver()
+    {
+        $token = session('token');
+
+        $response = Http::withToken($token)
+            ->get("http://dev.astucom.com:9038/erpservice/api/admin/user/{$this->selectedUserId}/state/0");
+
+        if ($response->ok() && !$response['error']) {
+            $this->success('Desactivation utilisateur avec succès');
+            $this->myModal2 = false;
+            $this->fetchUsers();
+        } else {
+            $this->error("Erreur lors de la desactivation.");
+        }
+    }
+
+
+    public function openActivationModal($id)
+    {
+        $this->selectedUserId = $id;
+        $this->myModal1 = true;
+    }
+
+
+    public function openDesactivationModal($id)
+    {
+        $this->selectedUserId = $id;
+        $this->myModal2 = true;
+    }
+
     public function with(): array
     {
         return [
@@ -63,7 +116,7 @@ new class extends Component {
 
 }; ?>
 <div>
-    <x-header title="Utilisateurs" subtitle="Gerer les utilisateurs ASTUPARF" separator>
+    <x-header title="Utilisateurs" subtitle="Gerer les utilisateurs ASTUPARF" separator progress-indicator>
         <x-slot:middle class="!justify-end">
             <x-input icon="o-bolt" placeholder="Chercher ..." />
         </x-slot:middle>
@@ -105,14 +158,15 @@ new class extends Component {
                 <th>NOM ET PRENOM</th>
                 <th>EMAIL</th>
                 <th>PROFIL</th>
-                <th>CRÉE-LE</th>
+                <th>STATUT</th>
+                <th class="text-end">CRÉE-LE</th>
                 <th class="text-end hidden md:table-cell">ACTION</th>
             </tr>
             </thead>
 
             <tbody x-data="{ showSkeleton: true }" x-init="setTimeout(() => showSkeleton = false, 2000)">
                 {{-- Skeleton visible pendant 5 secondes --}}
-                @for ($i = 0; $i < 10; $i++)
+                @for ($i = 0; $i < count($users); $i++)
                 <tr x-show="showSkeleton" class="animate-pulse">
                     <th>
                         <div class="h-4 w-24 bg-gray-200 dark:bg-neutral-800 rounded"></div>
@@ -123,12 +177,12 @@ new class extends Component {
                     <td>
                         <div class="h-4 w-32 bg-gray-200 dark:bg-neutral-800 rounded"></div>
                     </td>
-                    <td>
+                    <td >
                         <div class="h-4 w-32 bg-gray-200 dark:bg-neutral-800 rounded"></div>
                     </td>
                     <td class="text-end">
                         <div class="flex justify-end gap-2">
-                            <div class="h-8 w-16 bg-gray-200 dark:bg-neutral-800 rounded"></div>
+                            {{-- <div class="h-8 w-16 bg-gray-200 dark:bg-neutral-800 rounded"></div> --}}
                             <div class="h-8 w-16 bg-gray-200 dark:bg-neutral-800 rounded"></div>
                             <div class="h-8 w-16 bg-gray-200 dark:bg-neutral-800 rounded"></div>
                         </div>
@@ -146,11 +200,29 @@ new class extends Component {
                         {{ $user['email'] }}
                     </td>
                     <th>{{ $user['profil'] }}</th>
-                    <td>{{ \Carbon\Carbon::parse($user['created_at'])->format('d/m/Y H:i') }}</td>
+                    <td>
+                    @if ($user['state'] == 1)
+                        <span class="py-1 px-2 text-xs font-medium bg-green-100 text-green-800 rounded-full">
+                            Actif
+                        </span>
+                    @else
+                        <span class="py-1 px-2 text-xs font-medium bg-red-100 text-red-800 rounded-full">
+                            Inactif
+                        </span>
+                    @endif
+                </td>
+                    <td class="text-end">{{ \Carbon\Carbon::parse($user['created_at'])->format('d/m/Y H:i') }}</td>
                     <td class="text-end px-6 py-3">
+                        {{-- <x-button label="Open Persistent" @click="$wire.myModal1 = true" /> --}}
                         <a class="btn btn-active btn-primary btn-sm" href="{{ route('users.edit', $user['id']) }}" wire:navigate>Modifier</a>
-                        <button class="btn btn-dash btn-warning btn-sm">Activer</button>
-                        <button class="btn btn-dash btn-error btn-sm">Desactiver</button>
+
+                        @if ($user['state'] != 1)
+                        <x-button label="Activer" class="btn-sm" wire:click="openActivationModal({{ $user['id'] }})" />
+                        @endif
+
+                        @if ($user['state'] == 1)
+                        <button class="btn btn-dash btn-error btn-sm" wire:click="openDesactivationModal({{ $user['id'] }})">Desactiver</button>
+                        @endif
                     </td>
                 </tr>
 
@@ -183,4 +255,31 @@ new class extends Component {
         </div>
 
     </div>
+
+
+    <x-modal wire:model="myModal1" title="Activation compte" persistent separator class="backdrop-blur">
+        <div class="flex justify-between items-center">
+            Confirmer l’activation de l’utilisateur ?
+            <x-loading class="loading-infinity" wire:loading.inline />
+        </div>
+
+        <x-slot:actions>
+            <x-button label="Annuler" @click="$wire.myModal1 = false" class="btn-sm" />
+            <x-button label="Confirmer" wire:click="activer" class="btn-primary btn-sm" spiner />
+        </x-slot:actions>
+    </x-modal>
+
+
+    <x-modal wire:model="myModal2" title="Desactivation compte" persistent separator class="backdrop-blur">
+        <div class="flex justify-between items-center">
+            Confirmer la desactivation de l’utilisateur ?
+            <x-loading class="loading-infinity" wire:loading.inline />
+        </div>
+
+        <x-slot:actions>
+            <x-button label="Annuler" @click="$wire.myModal2 = false" class="btn-sm" />
+            <x-button label="Confirmer" wire:click="desactiver" class="btn-primary btn-sm" />
+        </x-slot:actions>
+    </x-modal>
+
 </div>

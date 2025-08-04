@@ -108,7 +108,11 @@ new class extends Component
             ->put("http://dev.astucom.com:9038/erpservice/api/admin/profil/{$this->profileId}", $payload);
 
         if ($response->ok() && !$response['error']) {
-            $this->success('Modification sauvegardée avec succès');
+            $this->success(
+                'Modification sauvegardée avec succès',
+                '',
+                redirectTo: '/administrations/profils'
+            );
         } else {
             $this->warning('Sellectioner au moin un permission.');
         }

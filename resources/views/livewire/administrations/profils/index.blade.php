@@ -63,7 +63,7 @@ new class extends Component {
 }; ?>
 
 <div>
-    <x-header title="Profie" subtitle="Manage profil ASTUPARF" separator>
+    <x-header title="Profil" subtitle="Tous les profil ASTUPARF" separator>
     <x-slot:middle class="!justify-end">
         <x-input icon="o-bolt" placeholder="Chercher profil..." />
     </x-slot:middle>
@@ -86,45 +86,14 @@ new class extends Component {
     <!-- head -->
     <thead>
       <tr>
-        <th>Libelle</th>
-        <th>Status</th>
-        <th>Date de creation</th>
-        <th class="text-end">Action</th>
+        <th>LIBELLE</th>
+        <th>STATUT</th>
+        <th>DATE DE CREATION</th>
+        <th class="text-end">ACTION</th>
       </tr>
     </thead>
-    {{-- <tbody>
-        @forelse($profils as $profil)
-        <tr>
-            <th>{{ $profil['name'] }}</th>
-            <td>
-                @if ($profil['state'] == 1)
-                    <span class="py-1 px-2 text-xs font-medium bg-green-100 text-green-800 rounded-full">
-                        Actif
-                    </span>
-                @else
-                    <span class="py-1 px-2 text-xs font-medium bg-red-100 text-red-800 rounded-full">
-                        Inactif
-                    </span>
-                @endif
-            </td>
-            <td> {{ \Carbon\Carbon::parse($profil['created_at'])->format('d/m/Y H:i') }}</td>
-            <td class="text-end px-6 py-3">
-                <a class="btn btn-active btn-primary btn-sm" href="{{ route('profils.edit', $profil['id']) }}" wire:navigate>Details</a>
-                <button class="btn btn-dash btn-warning btn-sm">Activer</button>
-                <button class="btn btn-dash btn-error btn-sm">Desactiver</button>
-            </td>
-        </tr>
-        @empty
-            <tr>
-                <td colspan="4" class="px-6 py-4 text-center text-gray-500 dark:text-neutral-500">
-                    Aucun profil trouvé.
-                </td>
-            </tr>
-        @endforelse
-    </tbody> --}}
 
-
-    <tbody x-data="{ showSkeleton: true }" x-init="setTimeout(() => showSkeleton = false, 5000)">
+    <tbody x-data="{ showSkeleton: true }" x-init="setTimeout(() => showSkeleton = false, 2000)">
         {{-- Skeleton visible pendant 5 secondes --}}
         @for ($i = 0; $i < 10; $i++)
         <tr x-show="showSkeleton" class="animate-pulse">
