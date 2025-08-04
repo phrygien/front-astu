@@ -82,8 +82,8 @@ new class extends Component {
 
 
             <x-slot:actions>
-                <x-button label="Annuler" />
-                <x-button label="Charger PARKOD" class="btn-primary" type="submit" spinner="save" />
+                <x-button label="Annuler" link="/gestion/produits" class="btn-sm" />
+                <x-button label="Charger PARKOD" class="btn-primary btn-sm" type="submit" spinner="save" />
             </x-slot:actions>
         </x-card>
     </x-form>

@@ -74,8 +74,6 @@ new class extends Component
 
             $mimeType = $this->file->getMimeType();
             $encodedFile = "data:{$mimeType};base64,{$base64File}";
-            //$encodedFile = "data:{data:text\/csv;base64,{$base64File}";
-
 
             $response = Http::withToken($token)->post('http://dev.astucom.com:9038/erpservice/api/product/parkod_upload', [
                 'file' => $encodedFile,
