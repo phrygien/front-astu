@@ -151,7 +151,7 @@ new class extends Component
                 <th>REF_FABRI</th>
                 <th>EAN</th>
                 <th>ETAT</th>
-                <th>CREE LE</th>
+                <th>CRÉE-LE</th>
                 <th class="text-end hidden md:table-cell">ACTION</th>
             </tr>
             </thead>

@@ -105,7 +105,7 @@ new class extends Component {
                 <th>NOM ET PRENOM</th>
                 <th>EMAIL</th>
                 <th>PROFIL</th>
-                <th>CREE LE</th>
+                <th>CRÉE-LE</th>
                 <th class="text-end hidden md:table-cell">ACTION</th>
             </tr>
             </thead>
@@ -119,6 +119,9 @@ new class extends Component {
                     </th>
                     <td>
                         <div class="h-4 w-20 bg-gray-200 dark:bg-neutral-800 rounded"></div>
+                    </td>
+                    <td>
+                        <div class="h-4 w-32 bg-gray-200 dark:bg-neutral-800 rounded"></div>
                     </td>
                     <td>
                         <div class="h-4 w-32 bg-gray-200 dark:bg-neutral-800 rounded"></div>
@@ -145,7 +148,7 @@ new class extends Component {
                     <th>{{ $user['profil'] }}</th>
                     <td>{{ \Carbon\Carbon::parse($user['created_at'])->format('d/m/Y H:i') }}</td>
                     <td class="text-end px-6 py-3">
-                        <a class="btn btn-active btn-primary btn-sm" href="{{ route('profils.edit', $user['id']) }}" wire:navigate>Modifier</a>
+                        <a class="btn btn-active btn-primary btn-sm" href="{{ route('users.edit', $user['id']) }}" wire:navigate>Modifier</a>
                         <button class="btn btn-dash btn-warning btn-sm">Activer</button>
                         <button class="btn btn-dash btn-error btn-sm">Desactiver</button>
                     </td>

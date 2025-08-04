@@ -36,6 +36,7 @@ Route::middleware(['jwt-session-auth'])->group( function(): void {
      * Gestion utilisateurs
      */
     Volt::route('/administrations/users','administrations.users.index')->name('users.index');
+    Volt::route('/administrations/user/{id}/edit','administrations.users.edit')->name('users.edit');
     Volt::route('/administrations/users/create', 'administrations.users.create')->name('users.create');
 
     /**
