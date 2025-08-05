@@ -70,7 +70,7 @@
                     <ul
                         tabindex="0"
                         class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-                        <x-menu-item title="PROFILE" icon="o-user-circle" />
+                        <x-menu-item title="PROFILE" icon="o-user-circle" link="/settings/profile" />
                         <x-menu-item title="DECONNECTER" icon="o-arrow-right-start-on-rectangle" />
                     </ul>
                 </div>

@@ -66,4 +66,9 @@ Route::middleware(['jwt-session-auth'])->group( function(): void {
         Volt::route('/fournisseurs/{id}/edit','gestions.fournisseurs.edit')->name('fournisseurs.edit');
     });
 
+
+    // profile user
+    Route::prefix('settings')->group(function(): void {
+        Volt::route('/profile','auth.profil.profile')->name('settings.profile');
+    });
 });

@@ -46,13 +46,12 @@ new class extends Component
     </x-header>
 
 @if($fournisseur)
-<x-card subtitle="Informations du fournisseur" separator class="border-5 border-gray-300 rounded-xl shadow-sm">
+<x-card subtitle="Informations du fournisseur" separator class="space-y">
     <div class="flex flex-col lg:flex-row gap-6 items-start">
         
         <!-- SVG à gauche -->
         <div class="bg-gray-100 rounded-md p-4 flex items-center justify-center w-full lg:w-1/3 min-h-[220px]">
             <svg width="160" height="160" viewBox="0 0 220 200" xmlns="http://www.w3.org/2000/svg">
-                <!-- Carton 3D -->
                 <rect x="40" y="110" width="140" height="60" fill="#e0c097" stroke="#b08968" stroke-width="2" rx="4" />
                 <polygon points="40,110 60,90 180,90 200,110" fill="#f3d5a8" stroke="#b08968" stroke-width="2"/>
                 <polygon points="60,90 60,110 180,110 180,90" fill="none" stroke="#b08968" stroke-width="1" stroke-dasharray="4,2"/>

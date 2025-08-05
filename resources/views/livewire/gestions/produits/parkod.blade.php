@@ -25,31 +25,37 @@ new class extends Component {
             return;
         }
 
+        // Vérification du type MIME
+        $mimeType = $this->file->getMimeType();
+        $extension = strtolower($this->file->getClientOriginalExtension());
+
+        if ($mimeType !== 'text/plain' && $extension !== 'txt') {
+            $this->warning('Le fichier doit être un fichier texte (.txt) via PARKOD.');
+            return;
+        }
+
         try {
             $fileContents = file_get_contents($this->file->getRealPath());
 
             $base64File = base64_encode($fileContents);
 
-            $mimeType = $this->file->getMimeType();
             $encodedFile = "data:{$mimeType};base64,{$base64File}";
-            //$encodedFile = "data:{data:text\/csv;base64,{$base64File}";
-
 
             $response = Http::withToken($this->token)->post('http://dev.astucom.com:9038/erpservice/api/product/parkod_upload', [
                 'file' => $encodedFile,
             ]);
 
-        
             if ($response->successful()) {
                 $this->success('Fichier PARKOD chargé avec succès.');
             } else {
-                $this->success('Échec de l\'envoi : ' . $response->body());
+                $this->warning('Échec de l\'envoi : ' . $response->body());
             }
 
         } catch (\Exception $e) {
             $this->warning('Erreur lors du chargement : ' . $e->getMessage());
         }
     }
+
 
 
 }; ?>
@@ -71,7 +77,7 @@ new class extends Component {
                     <div class="mt-4 flex text-sm/6 text-gray-600">
                         <label for="file-upload" class="relative cursor-pointer rounded-md bg-white font-semibold text-pink-600 focus-within:ring-2 focus-within:ring-pink-600 focus-within:ring-offset-2 focus-within:outline-hidden hover:text-pink-500">
                         <span>Uploader le fichier</span>
-                        <input id="file-upload" type="file" name="file" class="sr-only" wire:model="file" />
+                        <input id="file-upload" type="file" name="file" class="sr-only" wire:model="file" accept=".txt,text/plain"  />
                         </label>
                         <p class="pl-1">or drag and drop</p>
                     </div>

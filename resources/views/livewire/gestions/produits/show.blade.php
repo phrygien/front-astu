@@ -46,7 +46,7 @@ new class extends Component
     </x-header>
 
 @if($product)
-    <x-card subtitle="Basic information" separator progress-indicator class="border-5 border-gray-300 rounded-xl shadow-sm">
+    <x-card subtitle="Basic information" separator progress-indicator class="space-y">
 
         <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 mt-3 mb-3 p-4">
         <div class="flex flex-col md:flex-row items-center gap-6">
