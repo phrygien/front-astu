@@ -6,6 +6,7 @@ use Livewire\Volt\Component;
 
 new class extends Component {
     
+    use Toast;
 
     #[Validate('required', message: 'Code du fournisseur obligatoire')]
     #[Validate('min:3', message: 'Le champ CODE doit contenir 3 caractères maximum')]
@@ -78,7 +79,6 @@ new class extends Component {
         $response = Http::withToken($this->token)
             ->post(config('services.jwt.profile_endpoint') . '/fournisseur/fournisseur', $payload);
 
-            dd($response->json());
         if ($response->ok() && !$response['error']) {
             $this->success(
                 'Fournisseur sauvegarder avec succees',

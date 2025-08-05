@@ -93,7 +93,7 @@ new class extends Component
         <x-header title="Creation profil" subtitle="This is responsive" separator>
 
             <x-slot:actions>
-                <x-button label="Annuler" />
+                <x-button label="Annuler" link="/administrations/profils" />
                 <x-button label="Sauvegarder" class="btn-primary" type="submit" spinner="saveProfile" />
             </x-slot:actions>
         </x-header>
@@ -147,7 +147,7 @@ new class extends Component
                 </div>
                 
             <x-slot:actions>
-                <x-button label="Annuler" />
+                <x-button label="Annuler" link="/administrations/profils" />
                 <x-button label="Sauvegarder" class="btn-primary" type="submit" spinner="saveProfile" />
             </x-slot:actions>
         </x-card>

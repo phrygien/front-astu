@@ -39,50 +39,51 @@ new class extends Component
             <ul>
                 <li><a href="{{ route('produits.index') }}" wire:navigate>Produit</a></li>
                 <li>...</li>
-                <li class="text-pink-800">{{ $product['designation'] }}</li>
+                <li class="text-pink-800">@if($product) {{ $product['designation'] }} @else Les données du produit sont introuvables @endif</li>
             </ul>
         </div>
         </x-slot:actions>
     </x-header>
 
-    <x-card subtitle="Basic information" separator progress-indicator class="space-y">
+@if($product)
+    <x-card subtitle="Basic information" separator progress-indicator class="border-5 border-gray-300 rounded-xl shadow-sm">
 
-<div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 mt-3 mb-3 p-4">
-  <div class="flex flex-col md:flex-row items-center gap-6">
-    
-    <!-- SVG: Bouteille de parfum -->
-    <div class="flex-shrink-0">
-      <svg width="120" height="200" viewBox="0 0 120 200" xmlns="http://www.w3.org/2000/svg">
-        <rect x="45" y="10" width="30" height="20" fill="#999" rx="5" />
-        <rect x="50" y="30" width="20" height="20" fill="#bbb" rx="3" />
-        <path d="M40 50 Q30 100 30 150 Q30 180 60 190 Q90 180 90 150 Q90 100 80 50 Z" fill="#ddd" stroke="#aaa" stroke-width="2"/>
-        <rect x="45" y="100" width="30" height="20" fill="#ccc" stroke="#aaa" stroke-width="1" />
-        <text x="60" y="115" text-anchor="middle" font-size="8" fill="#666">PARFUM</text>
-      </svg>
-    </div>
+        <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 mt-3 mb-3 p-4">
+        <div class="flex flex-col md:flex-row items-center gap-6">
+            
+            <!-- SVG: Bouteille de parfum -->
+            <div class="flex-shrink-0">
+            <svg width="120" height="200" viewBox="0 0 120 200" xmlns="http://www.w3.org/2000/svg">
+                <rect x="45" y="10" width="30" height="20" fill="#999" rx="5" />
+                <rect x="50" y="30" width="20" height="20" fill="#bbb" rx="3" />
+                <path d="M40 50 Q30 100 30 150 Q30 180 60 190 Q90 180 90 150 Q90 100 80 50 Z" fill="#ddd" stroke="#aaa" stroke-width="2"/>
+                <rect x="45" y="100" width="30" height="20" fill="#ccc" stroke="#aaa" stroke-width="1" />
+                <text x="60" y="115" text-anchor="middle" font-size="8" fill="#666">PARFUM</text>
+            </svg>
+            </div>
 
-    <!-- Tableau des informations produit -->
-    <div class="overflow-x-auto w-full">
-      <table class="table">
-        <thead>
-          <tr>
-            <th class="text-end">Code produit</th>
-            <th class="text-end">Code Marque</th>
-            <th class="text-end">Code Catégorie</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th class="text-end">{{ $product['product_code'] ?? '-'}}</th>
-            <td class="text-end">{{ $product['marque_code'] ?? '-'}}</td>
-            <td class="text-end">{{ $product['categorie_code'] ?? '-'}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    
-  </div>
-</div>
+            <!-- Tableau des informations produit -->
+            <div class="overflow-x-auto w-full">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th class="text-end">Code produit</th>
+                    <th class="text-end">Code Marque</th>
+                    <th class="text-end">Code Catégorie</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th class="text-end">{{ $product['product_code'] ?? '-'}}</th>
+                    <td class="text-end">{{ $product['marque_code'] ?? '-'}}</td>
+                    <td class="text-end">{{ $product['categorie_code'] ?? '-'}}</td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+            
+        </div>
+        </div>
 
 
         <div class="space-y-3">
@@ -241,6 +242,18 @@ new class extends Component
 
         </div>
     </x-card>
-
+@else
+    <!-- Carte vide si $fournisseur est null -->
+    <x-card class="text-center text-gray-500 py-16">
+        <div class="flex flex-col items-center justify-center space-y-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 17v-6h13M9 5h13M3 12h.01M3 6h.01M3 18h.01" />
+            </svg>
+            <p class="text-lg font-medium">Aucun produit trouvé</p>
+            <p class="text-sm">Les données du produit sont introuvables ou n'ont pas été chargées.</p>
+        </div>
+    </x-card>
+@endif
 </div>
 

@@ -136,7 +136,7 @@ new class extends Component
         <x-header title="Modification d'un profil" subtitle="Modifier les information pour ce profile" separator>
 
             <x-slot:actions>
-                <x-button label="Annuler" />
+                <x-button label="Annuler" class="border-2 border-gray-300 rounded-md shadow-sm" link="/administrations/profils" />
                 <x-button label="Sauvegarder" class="btn-primary" type="submit" spinner="saveProfile" />
             </x-slot:actions>
         </x-header>
@@ -150,7 +150,7 @@ new class extends Component
                             <div class="flex flex-col gap-4 text-on-surface dark:text-on-surface-dark">
                     @foreach($tree as $i => $module)
                         <div x-data="{ isExpanded: {{ $openModule === $i ? 'true' : 'false' }} }"
-                            class="overflow-hidden rounded-sm border border-neutral-300 bg-neutral-50/40 dark:border-neutral-700 dark:bg-neutral-900/50">
+                            class="overflow-hidden bg-neutral-50/40 dark:border-neutral-700 dark:bg-neutral-900/50 border-2 border-gray-300 rounded-md shadow-sm">
                             <button type="button"
                                     class="flex w-full items-center justify-between gap-2 bg-neutral-50 p-4 text-left underline-offset-2 hover:bg-neutral-50/75 focus-visible:bg-neutral-50/75 focus-visible:underline focus-visible:outline-hidden dark:bg-neutral-900 dark:hover:bg-neutral-900/75 dark:focus-visible:bg-neutral-900/75" aria-controls="accordionItemOne" x-on:click="isExpanded = ! isExpanded" x-bind:class="isExpanded ? 'text-onSurfaceStrong dark:text-onSurfaceDarkStrong font-bold'  : 'text-onSurface dark:text-onSurfaceDark font-medium'"
                                     x-on:click="$wire.toggleModule({{ $i }})"
@@ -193,7 +193,7 @@ new class extends Component
                 </div>
                 
             <x-slot:actions>
-                <x-button label="Annuler" />
+                <x-button label="Annuler" class="border-2 border-gray-300 rounded-md shadow-sm" link="/administrations/profils" />
                 <x-button label="Sauvegarder" class="btn-primary" type="submit" spinner="saveProfile" />
             </x-slot:actions>
         </x-card>
