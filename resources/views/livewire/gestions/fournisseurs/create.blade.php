@@ -1,9 +1,95 @@
 <?php
 
+use Mary\Traits\Toast;
+use Livewire\Attributes\Validate;
 use Livewire\Volt\Component;
 
 new class extends Component {
-    //
+    
+
+    #[Validate('required', message: 'Code du fournisseur obligatoire')]
+    #[Validate('min:3', message: 'Le champ CODE doit contenir 3 caractères maximum')]
+    #[Validate('max:3', message: 'Le champ CODE doit contenir 3 caractères maximum')]
+    public string $code = '';
+
+    #[Validate('required', message: 'Nom du fournisseur obligatoire')]
+    public string $name = '';
+
+    #[Validate('required', message: 'La raison social du fournisseur obligatoire')]
+    public string $raison_social = '';
+
+    #[Validate('required', message: 'Adresse siege du fournisseur obligatoire')]
+    public string $adresse_siege = '';
+
+    #[Validate('required', message: 'Code postal obligatoire')]
+    public string $code_postal = '';
+
+    #[Validate('required', message: 'Ville du fournisseur obligatoire')]
+    public string $ville = '';
+
+    #[Validate('required', message: 'Le telephone du fournisseur obligatoire')]
+    public string $telephone = '';
+
+    #[Validate('nullable', message: 'Fax du fournisseur obligatoire')]
+    public string $fax = '';
+
+    #[Validate('required', message: 'Adresse mail du fournisseur obligatoire')]
+    public string $mail = '';
+
+    #[Validate('required', message: 'Adresse retour du fournisseur obligatoire')]
+    public string $adresse_retour = '';
+
+    #[Validate('required', message: 'Code postal du fournisseur obligatoire')]
+    public string $code_postal_retour = '';
+
+    #[Validate('required', message: 'Ville retour du fournisseur obligatoire')]
+    public string $ville_retour = '';
+
+
+    public $token;
+
+
+    public function mount(): void
+    {
+        $this->token = session('token');
+    }
+
+    public function save()
+    {
+        $this->validate();
+
+        $payload = [
+            'code' => $this->code,
+            'name' => $this->name,
+            'raison_social' => $this->raison_social,
+            'adresse_siege' => $this->adresse_siege,
+            'code_postal' => $this->code_postal,
+            'ville' => $this->ville,
+            'telephone' => $this->telephone,
+            'fax' => $this->fax,
+            'mail' => $this->mail,
+            'adresse_retour' => $this->adresse_retour,
+            'code_postal_retour' => $this->code_postal_retour,
+            'ville_retour' => $this->ville_retour,
+            'date_creation' =>  now()->format('Y-m-d')
+
+        ];
+
+        $response = Http::withToken($this->token)
+            ->post(config('services.jwt.profile_endpoint') . '/fournisseur/fournisseur', $payload);
+
+            dd($response->json());
+        if ($response->ok() && !$response['error']) {
+            $this->success(
+                'Fournisseur sauvegarder avec succees',
+                redirectTo: '/gestion/fournisseurs'
+            );
+            $this->reset(['code', 'name']);
+        } else {
+            $this->warning('Erreur lors de la sauvegarde du fournisseur.');
+        }
+
+    }
 }; ?>
 
 <div class="max-w-4xl mx-auto">
