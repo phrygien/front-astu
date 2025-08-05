@@ -118,8 +118,6 @@ new class extends Component {
                     <th>CODE</th>
                     <th>RAISON SOCIAL</th>
                     <th>ADRESSE SIEGE</th>
-                    <th>CODE POSTAL</th>
-                    <th>ADRESSE RETOUR</th>
                     <th>ETAT</th>
                     <th>CRÉE-LE</th>
                     <th class="text-end hidden md:table-cell">ACTION</th>
@@ -147,15 +145,10 @@ new class extends Component {
                         </td>
                         <td>
                             <div class="h-4 w-32 bg-gray-200 dark:bg-neutral-800 rounded"></div>
-                        </td>
-                        <td>
-                            <div class="h-4 w-32 bg-gray-200 dark:bg-neutral-800 rounded"></div>
-                        </td>
-                        <td>
-                            <div class="h-4 w-32 bg-gray-200 dark:bg-neutral-800 rounded"></div>
                         </td>                                                
                         <td class="text-end">
                             <div class="flex justify-end gap-2">
+                                <div class="h-8 w-16 bg-gray-200 dark:bg-neutral-800 rounded"></div>
                                 <div class="h-8 w-16 bg-gray-200 dark:bg-neutral-800 rounded"></div>
                                 <div class="h-8 w-16 bg-gray-200 dark:bg-neutral-800 rounded"></div>
                                 <div class="h-8 w-16 bg-gray-200 dark:bg-neutral-800 rounded"></div>
@@ -173,8 +166,6 @@ new class extends Component {
                         <th>{{ $fournisseur['code'] }}</th>
                         <th>{{ $fournisseur['raison_social'] }}</th>
                         <th>{{ $fournisseur['adresse_siege'] }}</th>
-                        <th>{{ $fournisseur['code_postal'] }}</th>
-                        <th>{{ $fournisseur['adresse_retour'] }}</th>
                         <td>
                             @if ($fournisseur['state'] == 1)
                                 <span class="py-1 px-2 text-xs font-medium bg-green-100 text-green-800 rounded-full">
@@ -189,21 +180,13 @@ new class extends Component {
                         <td>{{ \Carbon\Carbon::parse($fournisseur['created_at'])->format('d/m/Y H:i') }}</td>
                         <td class="text-end px-6 py-3">
                             <a class="btn btn-active btn-primary btn-sm" href="{{ route('fournisseurs.view', $fournisseur['id']) }}" wire:navigate>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                                </svg>
+                                Details
                             </a>
-                            {{-- <a class="btn btn-dash btn-warning btn-sm" href="{{ route('produits.edit', $fournisseur['code']) }}" wire:navigate>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
-                                    <path d="m2.695 14.762-1.262 3.155a.5.5 0 0 0 .65.65l3.155-1.262a4 4 0 0 0 1.343-.886L17.5 5.501a2.121 2.121 0 0 0-3-3L3.58 13.419a4 4 0 0 0-.885 1.343Z" />
-                                </svg>
-                            </a> --}}
-                            <a class="btn btn-dash btn-error btn-sm" href="##">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                </svg>
+                            <a class="btn btn-dash btn-warning btn-sm" href="{{ route('fournisseurs.edit', $fournisseur['id']) }}" wire:navigate>
+                                Modifier
                             </a>
+                            <x-button label="Activer" class="btn-sm btn-soft btn-accent" />
+                            <x-button label="Desactiver" class="btn-sm btn-soft btn-error" />
                         </td>
                     </tr>
                     @empty
