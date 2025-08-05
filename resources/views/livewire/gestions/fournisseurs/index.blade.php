@@ -72,7 +72,7 @@ new class extends Component {
 <div>
    <div>
 
-        <x-header title="Marque" subtitle="Tous les marques" separator progress-indicator>
+        <x-header title="Fournisseur" subtitle="Gerer le fournisseur" separator progress-indicator>
             <x-slot:middle class="!justify-end">
                 <x-input icon="o-bolt" placeholder="Chercher ..." />
             </x-slot:middle>
@@ -148,10 +148,10 @@ new class extends Component {
                         <td>
                             <div class="h-4 w-32 bg-gray-200 dark:bg-neutral-800 rounded"></div>
                         </td>
-                                                <td>
+                        <td>
                             <div class="h-4 w-32 bg-gray-200 dark:bg-neutral-800 rounded"></div>
                         </td>
-                                                <td>
+                        <td>
                             <div class="h-4 w-32 bg-gray-200 dark:bg-neutral-800 rounded"></div>
                         </td>                                                
                         <td class="text-end">
