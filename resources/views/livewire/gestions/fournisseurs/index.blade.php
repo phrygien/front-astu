@@ -104,7 +104,7 @@ new class extends Component {
                     @endfor
                 </div>
                 
-                <x-button icon="o-plus-circle" class="btn-primary btn-sm" @click="$wire.myModal1 = true" label="Créer une marque" />
+                <x-button icon="o-plus-circle" class="btn-primary btn-sm" label="Ajouter fournisseur" link="/gestion/fournisseurs/create" />
                 
             </x-slot:actions>
         </x-header>
