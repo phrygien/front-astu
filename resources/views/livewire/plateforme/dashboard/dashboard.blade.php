@@ -21,7 +21,19 @@ new class extends Component {
                 <x-stat title="Applications" value="2" icon="o-cube" class="col-span-2"/>
                 <x-stat title="Ventes" value="340" icon="o-currency-euro" class="col-span-2"/>
             </section>
-            {{-- <livewire:tenants.stats />
-            <livewire:tenants.department-list /> --}}
+        </div>
+
+        <x-card title="Commande" subtitle="Always triggers" separator class="mt-10 py-10">
+
+        </x-card>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+            <x-card title="Your stats" subtitle="Always triggers" separator >
+
+            </x-card>
+            
+            <x-card title="Your stats" subtitle="Only triggers with `save2`" separator>
+
+            </x-card>
         </div>
 </div>
