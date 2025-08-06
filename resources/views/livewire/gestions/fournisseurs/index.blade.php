@@ -71,6 +71,7 @@ new class extends Component {
         if ($response->ok() && !$response['error']) {
             $this->success('Activation fournisseur avec succès');
             $this->myModal1 = false;
+            $this->selectedFournisseurId = null;
             $this->fetchFournisseurs();
         } else {
             $this->error("Erreur lors de l'activation fournisseur.");
@@ -87,6 +88,7 @@ new class extends Component {
         if ($response->ok() && !$response['error']) {
             $this->success('Desactivation fournisseur avec succès');
             $this->myModal2 = false;
+            $this->selectedFournisseurId = null;
             $this->fetchFournisseurs();
         } else {
             $this->error("Erreur lors de la desactivation.");
@@ -236,11 +238,15 @@ new class extends Component {
                                 Modifier
                             </a>
                         @if ($fournisseur['state'] != 1)
-                            <x-button label="Activer" class="btn-sm btn-soft btn-accent" wire:click="openActivationModal({{ $fournisseur['id'] }})" />
+                            <x-button class="btn-sm btn-soft btn-accent" wire:click="openActivationModal({{ $fournisseur['id'] }})" icon="o-check-badge" />
                         @endif
 
                         @if ($fournisseur['state'] == 1)
-                            <button class="btn btn-soft btn-error btn-sm" wire:click="openDesactivationModal({{ $fournisseur['id'] }})">Desactiver</button>
+                            <button class="btn btn-soft btn-error btn-sm" wire:click="openDesactivationModal({{ $fournisseur['id'] }})">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636" />
+                                </svg>
+                            </button>
                         @endif
                         </td>
                     </tr>
