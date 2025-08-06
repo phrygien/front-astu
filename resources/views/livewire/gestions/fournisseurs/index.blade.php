@@ -8,6 +8,7 @@ new class extends Component {
     use Toast;
 
     public bool $myModal1 = false;
+    public bool $myModal2 = false;
 
     public int $page = 1;
     public array $fournisseurs = [];
@@ -23,6 +24,8 @@ new class extends Component {
     public string $name = '';
 
     public $token;
+
+    public $selectedFournisseurId = null;
 
     public function mount(): void {
         $this->token = session('token');
@@ -58,6 +61,51 @@ new class extends Component {
         }
     }
 
+    public function activer()
+    {
+        $token = session('token');
+
+        $response = Http::withToken($token)
+            ->get(config('services.jwt.profile_endpoint') . '/fournisseur/fournisseur/'. $this->selectedFournisseurId .'/state/1');
+
+        if ($response->ok() && !$response['error']) {
+            $this->success('Activation fournisseur avec succès');
+            $this->myModal1 = false;
+            $this->fetchFournisseurs();
+        } else {
+            $this->error("Erreur lors de l'activation fournisseur.");
+        }
+    }
+
+    public function desactiver()
+    {
+        $token = session('token');
+
+        $response = Http::withToken($token)
+            ->get(config('services.jwt.profile_endpoint') . '/fournisseur/fournisseur/'. $this->selectedFournisseurId .'/state/0');
+
+        if ($response->ok() && !$response['error']) {
+            $this->success('Desactivation fournisseur avec succès');
+            $this->myModal2 = false;
+            $this->fetchFournisseurs();
+        } else {
+            $this->error("Erreur lors de la desactivation.");
+        }
+    }
+
+    
+    public function openActivationModal($id)
+    {
+        $this->selectedFournisseurId = $id;
+        $this->myModal1 = true;
+    }
+
+
+    public function openDesactivationModal($id)
+    {
+        $this->selectedFournisseurId = $id;
+        $this->myModal2 = true;
+    }
 
     public function with(): array
     {
@@ -82,7 +130,9 @@ new class extends Component {
             <fieldset class="fieldset">
                 <select class="select" wire:model.live="perPage">
                     <option disabled selected>Afficher par</option>
+                    <option value="10">5</option>
                     <option value="10">10</option>
+                    <option value="10">20</option>
                     <option value="50">50</option>
                     <option value="100">100</option>
                     <option value="150">150</option>
@@ -150,7 +200,7 @@ new class extends Component {
                             <div class="flex justify-end gap-2">
                                 <div class="h-8 w-16 bg-gray-200 dark:bg-neutral-800 rounded"></div>
                                 <div class="h-8 w-16 bg-gray-200 dark:bg-neutral-800 rounded"></div>
-                                <div class="h-8 w-16 bg-gray-200 dark:bg-neutral-800 rounded"></div>
+                                {{-- <div class="h-8 w-16 bg-gray-200 dark:bg-neutral-800 rounded"></div> --}}
                                 <div class="h-8 w-16 bg-gray-200 dark:bg-neutral-800 rounded"></div>
                             </div>
                         </td>
@@ -185,8 +235,13 @@ new class extends Component {
                             <a class="btn btn-dash btn-warning btn-sm" href="{{ route('fournisseurs.edit', $fournisseur['id']) }}" wire:navigate>
                                 Modifier
                             </a>
-                            <x-button label="Activer" class="btn-sm btn-soft btn-accent" />
-                            <x-button label="Desactiver" class="btn-sm btn-soft btn-error" />
+                        @if ($fournisseur['state'] != 1)
+                            <x-button label="Activer" class="btn-sm btn-soft btn-accent" wire:click="openActivationModal({{ $fournisseur['id'] }})" />
+                        @endif
+
+                        @if ($fournisseur['state'] == 1)
+                            <button class="btn btn-soft btn-error btn-sm" wire:click="openDesactivationModal({{ $fournisseur['id'] }})">Desactiver</button>
+                        @endif
                         </td>
                     </tr>
                     @empty
@@ -223,18 +278,92 @@ new class extends Component {
 
 
 
-    <x-modal wire:model="myModal1" title="Création de marque" class="backdrop-blur">
+<x-modal wire:model="myModal1" persistent class="fixed inset-0 max-h-none max-w-none overflow-y-auto bg-transparent backdrop:bg-transparent">
 
-        <x-form wire:submit="save">
-            <x-input label="Code Marque" wire:model="code" hint="Exemple: 001" />
-            <x-input label="Libelle" wire:model="name" placeholder="" />
-        
-            <x-slot:actions>
-                <x-button label="Annuler" @click="$wire.myModal1 = false" class="btn-sm" />
-                <x-button label="Sauvegarder" class="btn-primary btn-sm" type="submit" spinner="save" />
-            </x-slot:actions>
-        </x-form>
-    </x-modal>
+            <!-- Contenu -->
+            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div class="sm:flex sm:items-start">
+                    <div class="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-green-100 sm:mx-0 sm:size-10">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="size-6 text-green-600">
+                            <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                        <h3 class="text-base font-semibold text-gray-900">
+                            Activation du fournisseur
+                        </h3>
+                        <div class="mt-2">
+                            <p class="text-sm text-gray-500">
+                                Confirmez-vous l’activation de ce fournisseur ?
+                            </p>
+                        </div>
 
+                        <!-- Loading avec texte -->
+                        <div class="mt-4 flex items-center space-x-2 text-sm text-blue-500" wire:loading wire:target="activer">
+                            <span>Activation en cours...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Boutons -->
+            <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                <x-button
+                    wire:click="activer"
+                    label="Confirmer"
+                    wire:loading.attr="disabled"
+                    class="inline-flex w-full justify-center btn btn-primary px-3 py-2 font-semibold shadow-xs btn-primary sm:ml-3 sm:w-auto"
+                />
+                <x-button
+                    label="Annuler"
+                    @click="$wire.myModal1 = false"
+                    class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                />
+            </div>
+</x-modal>
+
+
+
+<x-modal wire:model="myModal2" persistent class="fixed inset-0 max-h-none max-w-none overflow-y-auto bg-transparent backdrop:bg-transparent">
+    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+        <div class="sm:flex sm:items-start">
+            <div class="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:size-10">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="size-6 text-red-600">
+                    <path d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </div>
+            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                <h3 class="text-base font-semibold text-gray-900">
+                    Désactivation du fournisseur
+                </h3>
+                <div class="mt-2 text-sm text-gray-500">
+                    Confirmez-vous la désactivation du fournisseur ?
+                </div>
+
+                <!-- Loading avec texte -->
+                <div class="mt-4 flex items-center space-x-2 text-sm text-blue-500" wire:loading wire:target="desactiver">
+                    <span>Desactivation en cours...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <x-slot:actions>
+        <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 w-full">
+            <x-button 
+                label="Confirmer" 
+                wire:click="desactiver" 
+                class="btn btn-primary"
+            />
+            <x-button 
+                label="Annuler" 
+                @click="$wire.myModal2 = false" class="mr-4 btn btn-error"
+            />
+        </div>
+    </x-slot:actions>
+</x-modal>
+
+
+    
 </div>
 </div>

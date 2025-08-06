@@ -8,7 +8,7 @@ new class extends Component {
     
     public $profils = [];
     public bool $myModal1 = false;
-       public bool $myModal2 = false;
+    public bool $myModal2 = false;
 
     public bool $loading = true;
     public bool $showSkeleton = true;

@@ -10,8 +10,8 @@ new class extends Component {
     use Toast;
 
     #[Validate('required', message: 'Code du fournisseur obligatoire')]
-    #[Validate('min:3', message: 'Le champ CODE doit contenir 3 caractères maximum')]
-    #[Validate('max:3', message: 'Le champ CODE doit contenir 3 caractères maximum')]
+    #[Validate('min:4', message: 'Le champ CODE doit contenir 3 caractères maximum')]
+    #[Validate('max:4', message: 'Le champ CODE doit contenir 3 caractères maximum')]
     public string $code = '';
 
     #[Validate('required', message: 'Nom du fournisseur obligatoire')]
@@ -127,14 +127,14 @@ new class extends Component {
 
 <div class="max-w-4xl mx-auto">
 
+<x-form wire:submit="save">
+
     <x-header title="Modification fournisseur" subtitle="Modification fournisseur" separator>
         <x-slot:actions>
             <x-button label="Annuler" link="/gestion/fournisseurs" class="btn-sm" />
             <x-button label="Sauvegarder" class="btn-primary btn-sm" type="submit" spinner="save" />
         </x-slot:actions>
     </x-header>
-    
-        <x-form wire:submit="save">
 
             <div class="lg:grid grid-cols-5">
                 <div class="col-span-2">
