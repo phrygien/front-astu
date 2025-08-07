@@ -205,7 +205,7 @@ new class extends Component
 ?>
 
 
-<div class="max-w-5xl mx-auto">
+<div class="w-full mx-auto">
 
     <x-header title="Détails " subtitle="Détails du fournisseur" separator>
         <x-slot:actions>
@@ -222,7 +222,37 @@ new class extends Component
 @if($fournisseur)
 <div class="flex flex-col gap-6">
 
-    <x-card class="rounded-md border border-base-100 bg-base-100 shadow-sm" title="Informations fournisseur" subtitle="Détails" separator>
+    <div class="flow-root">
+
+        @php
+            $fields = [
+                ['label' => 'Nom', 'value' => $fournisseur['name'] ?? '-'],
+                ['label' => 'Code', 'value' => $fournisseur['code'] ?? '-'],
+                ['label' => 'Raison social', 'value' => $fournisseur['raison_social'] ?? '-'],
+                ['label' => 'Adresse siège', 'value' => $fournisseur['adresse_siege'] ?? '-'],
+                ['label' => 'Code postal', 'value' => $fournisseur['code_postal'] ?? '-'],
+                ['label' => 'Ville', 'value' => $fournisseur['ville'] ?? '-'],
+                ['label' => 'Téléphone', 'value' => $fournisseur['telephone'] ?? '-'],
+                ['label' => 'Fax', 'value' => $fournisseur['fax'] ?? '-'],
+                ['label' => 'Email', 'value' => $fournisseur['mail'] ?? '-'],
+                ['label' => 'Date de création', 'value' => \Carbon\Carbon::parse($fournisseur['created_at'])->locale('fr')->isoFormat('LL')],
+                ['label' => 'Dernière modification', 'value' => \Carbon\Carbon::parse($fournisseur['updated_at'])->locale('fr')->isoFormat('LL')],
+            ];
+        @endphp
+
+
+    <dl class="-my-3 divide-y divide-gray-200 rounded border border-gray-200 text-sm">
+        @foreach ($fields as $field)
+            <div class="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
+                <dt class="font-medium text-gray-900">{{ $field['label'] }}</dt>
+
+                <dd class="text-gray-700 sm:col-span-2">{{ $field['value'] }}</dd>
+            </div>
+        @endforeach
+    </dl>
+    </div>
+
+    {{-- <x-card class="rounded-md border border-base-100 bg-base-100 shadow-sm" separator>
         <div class="space-y-2">
             @php
                 $fields = [
@@ -247,10 +277,160 @@ new class extends Component
                 </dl>
             @endforeach
         </div>
-    </x-card>
 
 
-    <x-card class="rounded-md border border-base-100 shadow-sm" title="Produits fournisseur" subtitle="Liste des produits associés" separator>
+    <div class="flow-root">
+    <dl class="-my-3 divide-y divide-gray-200 rounded border border-gray-200 text-sm">
+        <div class="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
+        <dt class="font-medium text-gray-900">Title</dt>
+
+        <dd class="text-gray-700 sm:col-span-2">Mr</dd>
+        </div>
+
+        <div class="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
+        <dt class="font-medium text-gray-900">Name</dt>
+
+        <dd class="text-gray-700 sm:col-span-2">John Frusciante</dd>
+        </div>
+
+        <div class="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
+        <dt class="font-medium text-gray-900">Occupation</dt>
+
+        <dd class="text-gray-700 sm:col-span-2">Guitarist</dd>
+        </div>
+
+        <div class="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
+        <dt class="font-medium text-gray-900">Salary</dt>
+
+        <dd class="text-gray-700 sm:col-span-2">$1,000,000+</dd>
+        </div>
+
+        <div class="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
+        <dt class="font-medium text-gray-900">Bio</dt>
+
+        <dd class="text-gray-700 sm:col-span-2">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Et facilis debitis explicabo
+            doloremque impedit nesciunt dolorem facere, dolor quasi veritatis quia fugit aperiam
+            aspernatur neque molestiae labore aliquam soluta architecto?
+        </dd>
+        </div>
+    </dl>
+    </div>
+
+
+    </x-card> --}}
+
+
+        <div class="flex flex-wrap justify-between items-center gap-4 mt-4">
+            <div class="w-full sm:w-auto">
+                <x-input icon="o-bolt" placeholder="Chercher ..." class="input-sm" />
+            </div>
+
+            <div class="flex flex-wrap justify-end items-center gap-2">
+                <fieldset class="fieldset">
+                    <select class="select select-sm" wire:model.live="perPage">
+                        <option disabled selected>Afficher par</option>
+                        <option value="10">10</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                        <option value="150">150</option>
+                        <option value="200">200</option>
+                        <option value="250">250</option>
+                        <option value="300">300</option>
+                    </select>
+                </fieldset>
+
+                <div class="inline-flex gap-x-1">
+                    @for ($i = 1; $i <= $totalPages; $i++)
+                        @if ($i === $currentPage)
+                            <button class="join-item btn btn-sm btn-primary" wire:click="goToPage({{ $i }})">{{ $i }}</button>
+                        @elseif ($i === 1 || $i === $totalPages || abs($i - $currentPage) <= 1)
+                            <button class="join-item btn btn-sm" wire:click="goToPage({{ $i }})">{{ $i }}</button>
+                        @elseif ($i === $currentPage - 2 || $i === $currentPage + 2)
+                            <button class="join-item btn btn-sm btn-disabled">...</button>
+                        @endif
+                    @endfor
+                </div>
+
+                <a href="{{ route('fournisseurs.attache', $fournisseur['id']) }}" wire:navigate class="btn btn-primary btn-sm">Attacher des produits au fournisseur</a>
+            </div>
+        </div>
+
+        <div class="overflow-x-auto mt-4 rounded-box border border-base-content/5 bg-base-100">
+            <table class="table w-full">
+                <thead>
+                    <tr>
+                        <th>DESIGNATION</th>
+                        <th>VARIANT</th>
+                        <th>ARTICLE</th>
+                        <th>REF_FABRI</th>
+                        <th>EAN</th>
+                        <th class="text-end hidden md:table-cell">ACTION</th>
+                    </tr>
+                </thead>
+
+                <tbody x-data="{ showSkeleton: true }" x-init="setTimeout(() => showSkeleton = false, 2000)">
+                    @for ($i = 0; $i < 10; $i++)
+                    <tr x-show="showSkeleton" class="animate-pulse">
+                        <th><div class="h-4 w-24 bg-gray-200 dark:bg-neutral-800 rounded"></div></th>
+                        <td><div class="h-4 w-20 bg-gray-200 dark:bg-neutral-800 rounded"></div></td>
+                        <td><div class="h-4 w-32 bg-gray-200 dark:bg-neutral-800 rounded"></div></td>
+                        <td><div class="h-4 w-32 bg-gray-200 dark:bg-neutral-800 rounded"></div></td>
+                        <td><div class="h-4 w-32 bg-gray-200 dark:bg-neutral-800 rounded"></div></td>
+                        <td class="text-end"><div class="h-8 w-16 bg-gray-200 dark:bg-neutral-800 rounded"></div></td>
+                    </tr>
+                    @endfor
+
+                    @forelse($products as $product)
+                    <tr x-show="!showSkeleton" x-transition.opacity.duration.2000ms class="transition-opacity">
+                        <td>{{ $product['designation'] }}</td>
+                        <td>{{ $product['designation_variant'] }}</td>
+                        <td>{{ $product['article'] }}</td>
+                        <td>{{ $product['ref_fabri_n_1'] }}</td>
+                        <td>{{ $product['EAN'] }}</td>
+                        <td class="text-end px-6 py-3">
+                            <a class="btn btn-active btn-sm" href="{{ route('produits.show', $product['product_id']) }}" wire:navigate>
+                                Details
+                            </a>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr x-show="!showSkeleton" x-transition.opacity.duration.1000ms>
+                        <td colspan="6" class="py-10 px-6 text-center">
+                            <div class="flex flex-col items-center justify-center space-y-4 text-gray-500 dark:text-neutral-400">
+                                <svg class="w-20 h-20" fill="none" stroke="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9.75 9.75v28.5h28.5V9.75H9.75zm3 3h22.5v22.5H12.75V12.75zm3 4.5h16.5M15.75 22.5h16.5M15.75 28.5h11.25"/>
+                                </svg>
+                                <p class="text-sm">Aucun produit trouvé pour ce fournisseur</p>
+                            </div>
+                        </td>
+                    </tr>
+
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+
+        <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200 dark:border-neutral-700 mt-4">
+            <div>
+                <flux:input icon="magnifying-glass" placeholder="Chercher profil" />
+            </div>
+
+            <div class="inline-flex gap-x-2">
+                @for ($i = 1; $i <= $totalPages; $i++)
+                    @if ($i === $currentPage)
+                        <button class="join-item btn btn-sm btn-primary" wire:click="goToPage({{ $i }})">{{ $i }}</button>
+                    @elseif ($i === 1 || $i === $totalPages || abs($i - $currentPage) <= 1)
+                        <button class="join-item btn btn-sm" wire:click="goToPage({{ $i }})">{{ $i }}</button>
+                    @elseif ($i === $currentPage - 2 || $i === $currentPage + 2)
+                        <button class="join-item btn btn-sm btn-disabled">...</button>
+                    @endif
+                @endfor
+            </div>
+        </div>
+
+    {{-- <x-card class="rounded-md border border-base-100 shadow-sm" title="Produits fournisseur" subtitle="Liste des produits associés" separator>
 
         <div class="flex flex-wrap justify-between items-center gap-4">
             <div class="w-full sm:w-auto">
@@ -283,7 +463,7 @@ new class extends Component
                     @endfor
                 </div>
 
-                <a href="{{ route('fournisseurs.attache', $fournisseur['id']) }}" wire:navigate class="btn btn-primary btn-sm">Attacher produit fournisseur</a>
+                <a href="{{ route('fournisseurs.attache', $fournisseur['id']) }}" wire:navigate class="btn btn-primary btn-sm">Attacher des produits au fournisseur</a>
             </div>
         </div>
 
@@ -353,7 +533,7 @@ new class extends Component
                 @endfor
             </div>
         </div>
-    </x-card>
+    </x-card> --}}
 
 </div>
 
