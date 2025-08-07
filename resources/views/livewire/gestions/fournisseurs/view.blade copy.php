@@ -205,7 +205,7 @@ new class extends Component
 ?>
 
 
-<div class="w-full mx-auto">
+<div class="max-w-5xl mx-auto">
 
     <x-header title="Détails " subtitle="Détails du fournisseur" separator>
         <x-slot:actions>
@@ -220,160 +220,182 @@ new class extends Component
     </x-header>
 
 @if($fournisseur)
-<div class="flex flex-col lg:flex-row gap-6">
-    <!-- Carte Informations Fournisseur -->
-    <div class="w-full lg:w-1/2">
-        <div class="rounded-md border border-base-100 bg-base-100 shadow-sm">
-            <div class="px-4 py-3 font-semibold text-base-content bg-base-200 rounded-t-md">
-                <small>INFORMATIONS FOURNISSEUR</small>
-            </div>
-            <div class="px-4 pb-4 pt-2">
-                <x-card subtitle="Détails" separator class="space-y-4">
-                    <div class="space-y-2">
-                        @php
-                            $fields = [
-                                ['label' => 'Nom', 'value' => $fournisseur['name'] ?? '-'],
-                                ['label' => 'Code', 'value' => $fournisseur['code'] ?? '-'],
-                                ['label' => 'Raison social', 'value' => $fournisseur['raison_social'] ?? '-'],
-                                ['label' => 'Adresse siège', 'value' => $fournisseur['adresse_siege'] ?? '-'],
-                                ['label' => 'Code postal', 'value' => $fournisseur['code_postal'] ?? '-'],
-                                ['label' => 'Ville', 'value' => $fournisseur['ville'] ?? '-'],
-                                ['label' => 'Téléphone', 'value' => $fournisseur['telephone'] ?? '-'],
-                                ['label' => 'Fax', 'value' => $fournisseur['fax'] ?? '-'],
-                                ['label' => 'Email', 'value' => $fournisseur['mail'] ?? '-'],
-                                ['label' => 'Date de création', 'value' => \Carbon\Carbon::parse($fournisseur['created_at'])->locale('fr')->isoFormat('LL')],
-                                ['label' => 'Dernière modification', 'value' => \Carbon\Carbon::parse($fournisseur['updated_at'])->locale('fr')->isoFormat('LL')],
-                            ];
-                        @endphp
+<div class="flex flex-col gap-6">
 
-                        @foreach ($fields as $field)
-                            <dl class="flex flex-col sm:flex-row gap-1 items-start sm:items-center justify-between">
-                                <dt class="min-w-40 text-sm text-gray-500 dark:text-neutral-500">{{ $field['label'] }} :</dt>
-                                <dd class="w-full text-right text-sm text-gray-800 dark:text-neutral-200">{{ $field['value'] }}</dd>
-                            </dl>
-                        @endforeach
-                    </div>
-                </x-card>
-            </div>
+    <details open class="rounded-md border border-base-100 bg-base-100 shadow-sm">
+        <summary class="cursor-pointer select-none px-4 py-3 font-semibold text-base-content bg-base-200 rounded-t-md">
+           <small> INFORMATIONS FOURNISSEUR</small>
+        </summary>
+        <div class="px-4 pb-4 pt-2">
+            <x-card subtitle="Détails" separator class="space-y-4">
+                <div class="space-y-2">
+                    @php
+                        $fields = [
+                            ['label' => 'Nom', 'value' => $fournisseur['name'] ?? '-'],
+                            ['label' => 'Code', 'value' => $fournisseur['code'] ?? '-'],
+                            ['label' => 'Raison social', 'value' => $fournisseur['raison_social'] ?? '-'],
+                            ['label' => 'Adresse siège', 'value' => $fournisseur['adresse_siege'] ?? '-'],
+                            ['label' => 'Code postal', 'value' => $fournisseur['code_postal'] ?? '-'],
+                            ['label' => 'Ville', 'value' => $fournisseur['ville'] ?? '-'],
+                            ['label' => 'Téléphone', 'value' => $fournisseur['telephone'] ?? '-'],
+                            ['label' => 'Fax', 'value' => $fournisseur['fax'] ?? '-'],
+                            ['label' => 'Email', 'value' => $fournisseur['mail'] ?? '-'],
+                            ['label' => 'Date de création', 'value' => \Carbon\Carbon::parse($fournisseur['created_at'])->locale('fr')->isoFormat('LL')],
+                            ['label' => 'Dernière modification', 'value' => \Carbon\Carbon::parse($fournisseur['updated_at'])->locale('fr')->isoFormat('LL')],
+                        ];
+                    @endphp
+
+                    @foreach ($fields as $field)
+                        <dl class="flex flex-col sm:flex-row gap-1 items-start sm:items-center justify-between">
+                            <dt class="min-w-40 text-sm text-gray-500 dark:text-neutral-500">{{ $field['label'] }} :</dt>
+                            <dd class="w-full text-right text-sm text-gray-800 dark:text-neutral-200">{{ $field['value'] }}</dd>
+                        </dl>
+                    @endforeach
+                </div>
+            </x-card>
+        </div>
+    </details>
+
+    <!-- Collapse 2 : Produits fournisseur -->
+<details open class="rounded-md border border-base-100 shadow-sm">
+    <summary class="cursor-pointer select-none px-4 py-3 font-semibold text-pink-800 bg-base-200 rounded-t-md">
+        <small>PRODUIT FOURNISSEUR</small>
+    </summary>
+
+<!-- Zone de recherche à gauche + contrôles à droite -->
+<div class="flex flex-wrap justify-between items-center gap-4 px-4 pt-4">
+    <div class="w-full sm:w-auto">
+        <x-input icon="o-bolt" placeholder="Chercher ..." class="input-sm" />
+    </div>
+
+    <div class="flex flex-wrap justify-end items-center gap-2">
+
+        <fieldset class="fieldset">
+            <select class="select select-sm" wire:model.live="perPage">
+                <option disabled selected>Afficher par</option>
+                <option value="10">10</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="150">150</option>
+                <option value="200">200</option>
+                <option value="250">250</option>
+                <option value="300">300</option>
+            </select>
+        </fieldset>
+
+        <div class="inline-flex gap-x-1">
+            @for ($i = 1; $i <= $totalPages; $i++)
+                @if ($i === $currentPage)
+                    <button class="join-item btn btn-sm btn-primary" wire:click="goToPage({{ $i }})">{{ $i }}</button>
+                @elseif ($i === 1 || $i === $totalPages || abs($i - $currentPage) <= 1)
+                    <button class="join-item btn btn-sm" wire:click="goToPage({{ $i }})">{{ $i }}</button>
+                @elseif ($i === $currentPage - 2 || $i === $currentPage + 2)
+                    <button class="join-item btn btn-sm btn-disabled">...</button>
+                @endif
+            @endfor
+        </div>
+
+        <x-button icon="o-plus-circle" class="btn-primary btn-sm" @click="$wire.showDrawer3 = true" label="Attacher produit" />
+    </div>
+</div>
+
+
+    <!-- Table -->
+    <div class="px-4 pb-4 pt-2">
+        <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
+        <table class="table w-full">
+            <!-- head -->
+            <thead>
+            <tr>
+                <th>DESIGNATION</th>
+                <th>VARIANT</th>
+                <th>ARTICLE</th>
+                <th>REF_FABRI</th>
+                <th>EAN</th>
+                <th class="text-end hidden md:table-cell">ACTION</th>
+            </tr>
+            </thead>
+
+            <tbody x-data="{ showSkeleton: true }" x-init="setTimeout(() => showSkeleton = false, 2000)">
+                {{-- Skeleton visible pendant 5 secondes --}}
+                @for ($i = 0; $i < 10; $i++)
+                <tr x-show="showSkeleton" class="animate-pulse">
+                    <th>
+                        <div class="h-4 w-24 bg-gray-200 dark:bg-neutral-800 rounded"></div>
+                    </th>
+                    <td>
+                        <div class="h-4 w-20 bg-gray-200 dark:bg-neutral-800 rounded"></div>
+                    </td>
+                    <td>
+                        <div class="h-4 w-32 bg-gray-200 dark:bg-neutral-800 rounded"></div>
+                    </td>
+                    <td>
+                        <div class="h-4 w-32 bg-gray-200 dark:bg-neutral-800 rounded"></div>
+                    </td>
+                    <td>
+                        <div class="h-4 w-32 bg-gray-200 dark:bg-neutral-800 rounded"></div>
+                    </td>
+                    <td class="text-end">
+                        <div class="flex justify-end gap-2">
+                            <div class="h-8 w-16 bg-gray-200 dark:bg-neutral-800 rounded"></div>
+                        </div>
+                    </td>
+                </tr>
+                @endfor
+            
+                {{-- Données affichées après 5 secondes avec fade-in --}}
+                @forelse($products as $product)
+                <tr x-show="!showSkeleton"
+                    x-transition.opacity.duration.2000ms
+                    class="transition-opacity">
+                    <th>{{ $product['designation'] }}</th>
+                    <th>{{ $product['designation_variant'] }}</th>
+                    <th>{{ $product['article'] }}</th>
+                    <th>{{ $product['ref_fabri_n_1'] }}</th>
+                    <th>{{ $product['EAN'] }}</th>
+                    <td class="text-end px-6 py-3">
+                        <a class="btn btn-active btn-sm" href="{{ route('produits.show', $product['product_id']) }}" wire:navigate>
+                            Details
+                        </a>
+                    </td>
+                </tr>
+                @empty
+                <tr x-show="!showSkeleton" x-transition.opacity.duration.1000ms>
+                    <td colspan="4" class="px-6 py-4 text-center text-gray-500 dark:text-neutral-500">
+                        Aucun produit trouvé
+                    </td>
+                </tr>
+                @endforelse
+            </tbody>
+            
+            
+            
+
+        </table>
         </div>
     </div>
 
-    <!-- Carte Produits Fournisseur -->
-    <div class="w-full lg:w-1/2">
-        <div class="rounded-md border border-base-100 bg-base-100 shadow-sm">
-            <div class="px-4 py-3 font-semibold text-pink-800 bg-base-200 rounded-t-md">
-                <small>PRODUIT FOURNISSEUR</small>
-            </div>
-
-            <!-- Zone de recherche -->
-            <div class="flex flex-wrap justify-between items-center gap-4 px-4 pt-4">
-                <div class="w-full sm:w-auto">
-                    <x-input icon="o-bolt" placeholder="Chercher ..." class="input-sm" />
-                </div>
-                <div class="flex flex-wrap justify-end items-center gap-2">
-                    <fieldset class="fieldset">
-                        <select class="select select-sm" wire:model.live="perPage">
-                            <option disabled selected>Afficher par</option>
-                            <option value="10">10</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                            <option value="150">150</option>
-                            <option value="200">200</option>
-                            <option value="250">250</option>
-                            <option value="300">300</option>
-                        </select>
-                    </fieldset>
-
-                    <div class="inline-flex gap-x-1">
-                        @for ($i = 1; $i <= $totalPages; $i++)
-                            @if ($i === $currentPage)
-                                <button class="join-item btn btn-sm btn-primary" wire:click="goToPage({{ $i }})">{{ $i }}</button>
-                            @elseif ($i === 1 || $i === $totalPages || abs($i - $currentPage) <= 1)
-                                <button class="join-item btn btn-sm" wire:click="goToPage({{ $i }})">{{ $i }}</button>
-                            @elseif ($i === $currentPage - 2 || $i === $currentPage + 2)
-                                <button class="join-item btn btn-sm btn-disabled">...</button>
-                            @endif
-                        @endfor
-                    </div>
-
-                    <a href="{{ route('fournisseurs.attache', $fournisseur['id']) }}" wire:navigate class="btn btn-primary">Attacher produit fournisseur</a>
-                </div>
-            </div>
-
-            <!-- Table des produits -->
-            <div class="px-4 pb-4 pt-2">
-                <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
-                    <table class="table w-full">
-                        <thead>
-                            <tr>
-                                <th>DESIGNATION</th>
-                                <th>VARIANT</th>
-                                <th>ARTICLE</th>
-                                <th>REF_FABRI</th>
-                                <th>EAN</th>
-                                <th class="text-end hidden md:table-cell">ACTION</th>
-                            </tr>
-                        </thead>
-                        <tbody x-data="{ showSkeleton: true }" x-init="setTimeout(() => showSkeleton = false, 2000)">
-                            @for ($i = 0; $i < 10; $i++)
-                            <tr x-show="showSkeleton" class="animate-pulse">
-                                <th><div class="h-4 w-24 bg-gray-200 dark:bg-neutral-800 rounded"></div></th>
-                                <td><div class="h-4 w-20 bg-gray-200 dark:bg-neutral-800 rounded"></div></td>
-                                <td><div class="h-4 w-32 bg-gray-200 dark:bg-neutral-800 rounded"></div></td>
-                                <td><div class="h-4 w-32 bg-gray-200 dark:bg-neutral-800 rounded"></div></td>
-                                <td><div class="h-4 w-32 bg-gray-200 dark:bg-neutral-800 rounded"></div></td>
-                                <td class="text-end">
-                                    <div class="flex justify-end gap-2">
-                                        <div class="h-8 w-16 bg-gray-200 dark:bg-neutral-800 rounded"></div>
-                                    </div>
-                                </td>
-                            </tr>
-                            @endfor
-
-                            @forelse($products as $product)
-                            <tr x-show="!showSkeleton" x-transition.opacity.duration.2000ms class="transition-opacity">
-                                <th>{{ $product['designation'] }}</th>
-                                <th>{{ $product['designation_variant'] }}</th>
-                                <th>{{ $product['article'] }}</th>
-                                <th>{{ $product['ref_fabri_n_1'] }}</th>
-                                <th>{{ $product['EAN'] }}</th>
-                                <td class="text-end px-6 py-3">
-                                    <a class="btn btn-active btn-sm" href="{{ route('produits.show', $product['product_id']) }}" wire:navigate>
-                                        Details
-                                    </a>
-                                </td>
-                            </tr>
-                            @empty
-                            <tr x-show="!showSkeleton" x-transition.opacity.duration.1000ms>
-                                <td colspan="6" class="px-6 py-4 text-center text-gray-500 dark:text-neutral-500">
-                                    Aucun produit trouvé
-                                </td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Pagination -->
-            <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200 dark:border-neutral-700">
-                <div>
-                    <flux:input icon="magnifying-glass" placeholder="Chercher profil" />
-                </div>
-                <div class="inline-flex gap-x-2">
-                    @for ($i = 1; $i <= $totalPages; $i++)
-                        @if ($i === $currentPage)
-                            <button class="join-item btn btn-sm btn-primary" wire:click="goToPage({{ $i }})">{{ $i }}</button>
-                        @elseif ($i === 1 || $i === $totalPages || abs($i - $currentPage) <= 1)
-                            <button class="join-item btn btn-sm" wire:click="goToPage({{ $i }})">{{ $i }}</button>
-                        @elseif ($i === $currentPage - 2 || $i === $currentPage + 2)
-                            <button class="join-item btn btn-sm btn-disabled">...</button>
-                        @endif
-                    @endfor
-                </div>
-            </div>
+    <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200 dark:border-neutral-700">
+        <div>
+            <flux:input icon="magnifying-glass" placeholder="Chercher profil" />
         </div>
+
+        <div class="inline-flex gap-x-2">
+            @for ($i = 1; $i <= $totalPages; $i++)
+                @if ($i === $currentPage)
+                    <button class="join-item btn btn-sm btn-primary" wire:click="goToPage({{ $i }})">{{ $i }}</button>
+                @elseif ($i === 1 || $i === $totalPages || abs($i - $currentPage) <= 1)
+                    <button class="join-item btn btn-sm" wire:click="goToPage({{ $i }})">{{ $i }}</button>
+                @elseif ($i === $currentPage - 2 || $i === $currentPage + 2)
+                    <button class="join-item btn btn-sm btn-disabled">...</button>
+                @endif
+            @endfor
+        </div>
+
     </div>
+</details>
+
+
 </div>
 
 

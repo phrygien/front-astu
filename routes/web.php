@@ -64,11 +64,12 @@ Route::middleware(['jwt-session-auth'])->group( function(): void {
         Volt::route('/fournisseurs/create','gestions.fournisseurs.create')->name('fournisseurs.create');
         Volt::route('/fournisseurs/{id}/view','gestions.fournisseurs.view')->name('fournisseurs.view');
         Volt::route('/fournisseurs/{id}/edit','gestions.fournisseurs.edit')->name('fournisseurs.edit');
-
+        Volt::route('/fournisseurs/{id}/attache_product', 'gestions.fournisseurs.attache')->name('fournisseurs.attache');
+        Volt::route('/fournisseurs/execute-attach','gestions.fournisseurs.execute-attach')->name('fournisseurs.execute-attach');
         /**
          * gestion produit fournisseur
          */
-        
+
     });
 
 
