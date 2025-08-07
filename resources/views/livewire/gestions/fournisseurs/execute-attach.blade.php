@@ -91,6 +91,19 @@ new class extends Component
             ]);
         }
     }
+
+    public function annuler()
+    {
+        // Optionnel : vider la session
+        session()->forget(['produits_selectionnes', 'fournisseur_id']);
+
+        $this->success(
+            'Operation annuler',
+            redirectTo: '/gestion/fournisseurs'
+        );
+
+        $this->reset();      
+    }
 };
 
 ?>
@@ -107,8 +120,8 @@ new class extends Component
                     </li>
                 </ul>
             </div> -
-            <x-button label="Ajouter produit" />
-            <x-button label="Executer l'operation" class="btn-primary" type="submit" spinner="envoyerProduits" />
+            <x-button label="Annuler" class="btn btn-error btn-sm" wire:click="annuler" />
+            <x-button label="Executer l'operation" class="btn-primary btn-sm" type="submit" spinner="envoyerProduits" />
         </x-slot:actions>
     </x-header>
 
@@ -165,15 +178,9 @@ new class extends Component
     </div>
 
     <div class="mt-6 flex justify-end">
-        {{-- <x-button
-            label="Valider"
-            class="btn-primary"
-            wire:click="envoyerProduits"
-        /> --}}
-
         <x-slot:actions>
-            <x-button label="Ajouter produit" />
-            <x-button label="Executer l'operation" class="btn-primary" type="submit" spinner="envoyerProduits" />
+            <x-button label="Annuler" class="btn btn-error btn-sm" wire:click="annuler" />
+            <x-button label="Executer l'operation" class="btn-primary btn-sm" type="submit" spinner="envoyerProduits" />
         </x-slot:actions>
     </div>
 </x-form>
