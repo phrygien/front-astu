@@ -1,16 +1,20 @@
 <?php
 
 use Livewire\Volt\Component;
+use Mary\Traits\Toast;
 use Illuminate\Support\Facades\Http;
 
 new class extends Component
 {
+    use Toast;
+
     public array $produitsSelectionnes = [];
     public int $fournisseurId = 0;
     public ?array $fournisseur = null;
 
     public array $prix = [];
     public array $tax = [];
+    
 
     public function mount(): void
     {
@@ -73,8 +77,12 @@ new class extends Component
             // Optionnel : vider la session
             session()->forget(['produits_selectionnes', 'fournisseur_id']);
 
-            // Redirection après succès
-            $this->redirect('/gestion/fournisseurs');
+            $this->success(
+                'Fournisseur sauvegarder avec succees',
+                redirectTo: '/gestion/fournisseurs'
+            );
+
+            $this->reset();
         } else {
             $this->dispatch('toast', [
                 'type' => 'error',
@@ -98,33 +106,36 @@ new class extends Component
                         {{ $fournisseur['name'] ?? 'Fournisseur inconnu' }}
                     </li>
                 </ul>
-            </div>
+            </div> -
+            <x-button label="Ajouter produit" />
+            <x-button label="Executer l'operation" class="btn-primary" type="submit" spinner="envoyerProduits" />
         </x-slot:actions>
     </x-header>
 
+<x-form wire:submit="envoyerProduits">
     <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 mt-4">
         <table class="table w-full">
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>CODE PRODUIT</th>
+                    <th>CODE CATEGORIE</th>
+                    <th>CODE MARQUE</th>
+                    <th>DESIGNATION</th>
                     <th>EAN</th>
-                    <th>Code Produit</th>
-                    <th>Catégorie</th>
-                    <th>Marque</th>
-                    <th>Désignation</th>
-                    <th>Prix HT</th>
-                    <th>Taxe</th>
+                    <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 @forelse($produitsSelectionnes as $produit)
                     <tr>
                         <td>{{ $produit['id'] }}</td>
-                        <td>{{ $produit['EAN'] }}</td>
                         <td>{{ $produit['product_code'] }}</td>
                         <td>{{ $produit['categorie_code'] }}</td>
                         <td>{{ $produit['marque_code'] }}</td>
                         <td>{{ $produit['designation'] }}</td>
+                        <td class="text-primary font-semi-bold">{{ $produit['EAN'] }}</td>
                         <td>
                             <x-input
                                 type="text"
@@ -154,55 +165,17 @@ new class extends Component
     </div>
 
     <div class="mt-6 flex justify-end">
-        <x-button
+        {{-- <x-button
             label="Valider"
             class="btn-primary"
             wire:click="envoyerProduits"
-        />
+        /> --}}
+
+        <x-slot:actions>
+            <x-button label="Ajouter produit" />
+            <x-button label="Executer l'operation" class="btn-primary" type="submit" spinner="envoyerProduits" />
+        </x-slot:actions>
     </div>
+</x-form>
 </div>
-
-
-{{-- <div class="p-4">
-    <h2 class="text-xl font-semibold mb-4">Produits sélectionnés</h2>
-
-    <table class="table w-full">
-        <thead>
-            <tr>
-                <th>Code</th>
-                <th>Catégorie</th>
-                <th>Marque</th>
-                <th>Désignation</th>
-                <th>Variante</th>
-                <th>Réf. Fabriquant</th>
-                <th>EAN</th>
-                <th>État</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($produitsSelectionnes as $produit)
-                <tr>
-                    <td>{{ $produit['product_code'] }}</td>
-                    <td>{{ $produit['categorie_code'] }}</td>
-                    <td>{{ $produit['marque_code'] }}</td>
-                    <td>{{ $produit['designation'] }}</td>
-                    <td>{{ $produit['designation_variant'] }}</td>
-                    <td>{{ $produit['ref_fabri_n_1'] }}</td>
-                    <td>{{ $produit['EAN'] }}</td>
-                    <td>
-                        @if ($produit['state'] == 1)
-                            <span class="badge badge-success">Actif</span>
-                        @else
-                            <span class="badge badge-error">Inactif</span>
-                        @endif
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="9" class="text-center text-gray-500">Aucun produit sélectionné.</td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
-</div> --}}
 

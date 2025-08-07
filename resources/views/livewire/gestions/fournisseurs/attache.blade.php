@@ -228,6 +228,13 @@ new class extends Component
             </div>
             
             <x-button 
+                icon="o-chevron-double-left" 
+                class="btn-sm" 
+                label="RETOUR"
+                link="/gestion/fournisseurs/{{ $fournisseurId }}/view"
+            />
+
+            <x-button 
                     icon-right="o-chevron-double-right" 
                     class="btn-primary btn-sm" 
                     label="ETAPE SUIVANT"
@@ -376,7 +383,14 @@ new class extends Component
                 @endif
             @endfor
 
-                        <x-button 
+                <x-button 
+                    icon="o-chevron-double-left" 
+                    class="btn-sm" 
+                    label="RETOUR"
+                    link="/gestion/fournisseurs/{{ $fournisseurId }}/view"
+                />
+
+                <x-button 
                     icon-right="o-chevron-double-right" 
                     class="btn-primary btn-sm" 
                     label="ETAPE SUIVANT"
