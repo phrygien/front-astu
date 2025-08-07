@@ -93,15 +93,14 @@ new class extends Component {
 }; ?>
 
 <div class="max-w-4xl mx-auto">
-
-    <x-header title="Fournisseur" subtitle="Création d’un nouveau fournisseur" separator>
+        <x-form wire:submit="save">
+    <x-header title="Fournisseur" subtitle="Formulaire de création de fournisseur" separator progress-indicator>
         <x-slot:actions>
-            <x-button label="Annuler" link="/gestion/fournisseurs" class="btn-sm" />
+            <x-button label="Annuler" link="/gestion/fournisseurs" class="btn-sm btn-active" />
             <x-button label="Sauvegarder" class="btn-primary btn-sm" type="submit" spinner="save" />
         </x-slot:actions>
     </x-header>
     
-        <x-form wire:submit="save">
 
             <div class="lg:grid grid-cols-5">
                 <div class="col-span-2">
@@ -151,7 +150,7 @@ new class extends Component {
             </div>
     
             <x-slot:actions>
-                <x-button label="Annuler" link="/gestion/fournisseurs" class="btn-sm" />
+                <x-button label="Annuler" link="/gestion/fournisseurs" class="btn-sm btn-active" />
                 <x-button label="Sauvegarder" class="btn-primary btn-sm" type="submit" spinner="save" />
             </x-slot:actions>
         </x-form>

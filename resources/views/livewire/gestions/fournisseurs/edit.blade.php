@@ -129,9 +129,9 @@ new class extends Component {
 
 <x-form wire:submit="save">
 
-    <x-header title="Modification fournisseur" subtitle="Modification fournisseur" separator>
+    <x-header title="Modification" subtitle="Édition du fournisseur" separator>
         <x-slot:actions>
-            <x-button label="Annuler" link="/gestion/fournisseurs" class="btn-sm" />
+            <x-button label="Annuler" link="/gestion/fournisseurs" class="btn-sm btn-active" />
             <x-button label="Sauvegarder" class="btn-primary btn-sm" type="submit" spinner="save" />
         </x-slot:actions>
     </x-header>
@@ -184,7 +184,7 @@ new class extends Component {
             </div>
     
             <x-slot:actions>
-                <x-button label="Annuler" link="/gestion/fournisseurs" class="btn-sm" />
+                <x-button label="Annuler" link="/gestion/fournisseurs" class="btn-sm btn-active" />
                 <x-button label="Sauvegarder" class="btn-primary btn-sm" type="submit" spinner="save" />
             </x-slot:actions>
         </x-form>

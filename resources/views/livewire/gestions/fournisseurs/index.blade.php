@@ -155,8 +155,10 @@ new class extends Component {
                         @endif
                     @endfor
                 </div>
-                
-                <x-button icon="o-plus-circle" class="btn-primary btn-sm" label="Ajouter fournisseur" link="/gestion/fournisseurs/create" />
+                {{-- <button class="px-5 py-2 rounded border border-transparent text-white bg-[#12232f] hover:bg-[#1f3544] transition text-sm btn-sm">
+                    Get a demo
+                </button> --}}
+                <x-button icon="o-plus-circle" class="btn-active btn-sm" label="Ajouter fournisseur" link="/gestion/fournisseurs/create" />
                 
             </x-slot:actions>
         </x-header>
@@ -231,10 +233,14 @@ new class extends Component {
                         </td>
                         <td>{{ \Carbon\Carbon::parse($fournisseur['created_at'])->format('d/m/Y H:i') }}</td>
                         <td class="text-end px-6 py-3">
-                            <a class="btn btn-active btn-primary btn-sm" href="{{ route('fournisseurs.view', $fournisseur['id']) }}" wire:navigate>
+                            {{-- <a class="btn btn-active btn-primary btn-sm" href="{{ route('fournisseurs.view', $fournisseur['id']) }}" wire:navigate>
                                 Details
-                            </a>
-                            <a class="btn btn-dash btn-warning btn-sm" href="{{ route('fournisseurs.edit', $fournisseur['id']) }}" wire:navigate>
+                            </a> --}}
+
+                            <!-- alternate Button -->
+                            <a href="{{ route('fournisseurs.view', $fournisseur['id']) }}" wire:navigate type="button" class="btn btn-sm">Details</a>
+
+                            <a class="btn btn-soft btn-primary btn-sm" href="{{ route('fournisseurs.edit', $fournisseur['id']) }}" wire:navigate>
                                 Modifier
                             </a>
                         @if ($fournisseur['state'] != 1)

@@ -363,7 +363,7 @@ new class extends Component
                     @endfor
                 </div>
 
-                <a href="{{ route('fournisseurs.attache', $fournisseur['id']) }}" wire:navigate class="btn btn-sm text-pink-500 border border-2 border-gray-500">Attacher des produits au fournisseur</a>
+                <a href="{{ route('fournisseurs.attache', $fournisseur['id']) }}" wire:navigate class="btn btn-sm btn-active">Attacher des produits au fournisseur</a>
             </div>
         </div>
 
@@ -400,7 +400,7 @@ new class extends Component
                         <td>{{ $product['ref_fabri_n_1'] }}</td>
                         <td>{{ $product['EAN'] }}</td>
                         <td class="text-end px-6 py-3">
-                            <a class="btn btn-active btn-sm btn-primary" href="{{ route('produits.show', $product['product_id']) }}" wire:navigate>
+                            <a class="btn btn-soft btn-sm btn-primary" href="{{ route('produits.show', $product['product_id']) }}" wire:navigate>
                                 Details
                             </a>
                         </td>
