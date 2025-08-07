@@ -229,7 +229,7 @@ new class extends Component
             
             <x-button 
                 icon="o-chevron-double-left" 
-                class="btn-sm" 
+                class="btn-sm btn-active" 
                 label="RETOUR"
                 link="/gestion/fournisseurs/{{ $fournisseurId }}/view"
             />
@@ -386,7 +386,7 @@ new class extends Component
 
                 <x-button 
                     icon="o-chevron-double-left" 
-                    class="btn-sm" 
+                    class="btn-sm btn-active" 
                     label="RETOUR"
                     link="/gestion/fournisseurs/{{ $fournisseurId }}/view"
                 />

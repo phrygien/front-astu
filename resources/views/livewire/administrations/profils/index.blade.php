@@ -75,7 +75,7 @@ new class extends Component {
             <button class="join-item btn btn-sm">99</button>
             <button class="join-item btn btn-sm">100</button>
         </div>
-        <x-button icon="o-plus-circle" class="btn-primary btn-sm" link="profil/create" />
+        <x-button icon="o-plus-circle" class="btn-active btn-sm" link="profil/create" label="Ajouter profil" />
     </x-slot:actions>
 </x-header>
 
@@ -135,9 +135,9 @@ new class extends Component {
             </td>
             <td>{{ \Carbon\Carbon::parse($profil['created_at'])->format('d/m/Y H:i') }}</td>
             <td class="text-end px-6 py-3">
-                <a class="btn btn-active btn-primary btn-sm" href="{{ route('profils.edit', $profil['id']) }}" wire:navigate>Details</a>
-                <button class="btn btn-dash btn-warning btn-sm">Activer</button>
-                <button class="btn btn-dash btn-error btn-sm">Desactiver</button>
+                <a class="btn btn-soft btn-primary btn-sm" href="{{ route('profils.edit', $profil['id']) }}" wire:navigate>Details</a>
+                <button class="btn btn-soft btn-warning btn-sm">Activer</button>
+                <button class="btn btn-soft btn-error btn-sm">Desactiver</button>
             </td>
         </tr>
         @empty

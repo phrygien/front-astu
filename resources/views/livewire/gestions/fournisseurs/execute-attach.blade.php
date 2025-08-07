@@ -120,7 +120,7 @@ new class extends Component
                     </li>
                 </ul>
             </div> -
-            <x-button label="Annuler" class="btn btn-error btn-sm" wire:click="annuler" />
+            <x-button label="Annuler" class="btn btn-active btn-sm" wire:click="annuler" />
             <x-button label="Executer l'operation" class="btn-primary btn-sm" type="submit" spinner="envoyerProduits" />
         </x-slot:actions>
     </x-header>
@@ -216,7 +216,7 @@ new class extends Component
 
         <div class="mt-6 flex justify-end">
             <x-slot:actions>
-                <x-button label="Annuler" class="btn btn-error btn-sm" wire:click="annuler" />
+                <x-button label="Annuler" class="btn btn-active btn-sm" wire:click="annuler" />
                 <x-button label="Executer l'operation" class="btn-primary btn-sm" type="submit" spinner="envoyerProduits" />
             </x-slot:actions>
         </div>

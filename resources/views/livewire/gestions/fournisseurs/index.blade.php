@@ -127,7 +127,7 @@ new class extends Component {
                 <x-input icon="o-bolt" placeholder="Chercher ..." />
             </x-slot:middle>
             <x-slot:actions>
-            <x-button icon="o-funnel" />
+            <x-button icon="o-funnel" class="btn-active" />
 
             <fieldset class="fieldset">
                 <select class="select" wire:model.live="perPage">

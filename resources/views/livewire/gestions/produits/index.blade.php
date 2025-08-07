@@ -102,7 +102,7 @@ new class extends Component
 };
 ?>
 <div>
-    <x-header title="Produits" subtitle="Gerer les produits ASTUPARF" separator progress-indicator>
+    <x-header title="Produit" subtitle="Gerer les produits ASTUPARF" separator progress-indicator>
         <x-slot:middle class="!justify-end">
             <x-input icon="o-bolt" placeholder="Chercher ..." />
         </x-slot:middle>
@@ -133,7 +133,7 @@ new class extends Component
                 @endfor
             </div>
             
-            <x-button icon="o-cloud-arrow-down" class="btn-primary btn-sm" @click="$wire.showDrawer3 = true" label="Charger PARKOD" />
+            <x-button icon="o-cloud-arrow-down" class="btn btn-active btn-sm" @click="$wire.showDrawer3 = true" label="Charger PARKOD" />
             
         </x-slot:actions>
     </x-header>
@@ -213,7 +213,7 @@ new class extends Component
                     </td>
                     <td>{{ \Carbon\Carbon::parse($product['created_at'])->format('d/m/Y H:i') }}</td>
                     <td class="text-end px-6 py-3">
-                        <a class="btn btn-active btn-primary btn-sm" href="{{ route('produits.show', $product['id']) }}" wire:navigate>
+                        <a class="btn btn-soft btn-primary btn-sm" href="{{ route('produits.show', $product['id']) }}" wire:navigate>
                             Details
                         </a>
                         {{-- <a class="btn btn-dash btn-warning btn-sm" href="{{ route('produits.edit', $product['id']) }}" wire:navigate>
@@ -291,7 +291,7 @@ new class extends Component
             </div>
     
         <x-slot:actions>
-            <x-button label="Annuler" @click="$wire.showDrawer3 = false" />
+            <x-button label="Annuler" @click="$wire.showDrawer3 = false" class="btn-active" />
             <x-button label="Executer" class="btn-primary" type="submit" spinner="loadParkod" />
         </x-slot:actions>
     </x-drawer>

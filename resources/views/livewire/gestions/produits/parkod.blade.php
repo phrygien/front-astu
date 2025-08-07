@@ -46,7 +46,11 @@ new class extends Component {
             ]);
 
             if ($response->successful()) {
-                $this->success('Fichier PARKOD chargé avec succès.');
+                $this->success(
+                'Fichier PARKOD chargé avec succès.',
+                redirectTo: '/gestion/produits'
+                );
+
             } else {
                 $this->warning('Échec de l\'envoi : ' . $response->body());
             }
@@ -88,7 +92,7 @@ new class extends Component {
 
 
             <x-slot:actions>
-                <x-button label="Annuler" link="/gestion/produits" class="btn-sm" />
+                <x-button label="Annuler" link="/gestion/produits" class="btn-sm btn-active" />
                 <x-button label="Charger PARKOD" class="btn-primary btn-sm" type="submit" spinner="save" />
             </x-slot:actions>
         </x-card>
