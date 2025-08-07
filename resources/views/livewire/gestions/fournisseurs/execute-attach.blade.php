@@ -126,56 +126,93 @@ new class extends Component
     </x-header>
 
     <x-form wire:submit="envoyerProduits">
-        <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 mt-4">
-            <table class="table w-full">
-                <thead>
+
+<div x-data="{ showData: false }" x-init="setTimeout(() => showData = true, 2000)" class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 mt-4">
+
+    
+    {{-- Skeleton pendant le chargement --}}
+    <template x-if="!showData">
+        <table class="table w-full animate-slow-pulse">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>CODE PRODUIT</th>
+                    <th>CODE CATEGORIE</th>
+                    <th>CODE MARQUE</th>
+                    <th>DESIGNATION</th>
+                    <th>EAN</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @for ($i = 0; $i < 5; $i++)
                     <tr>
-                        <th>ID</th>
-                        <th>CODE PRODUIT</th>
-                        <th>CODE CATEGORIE</th>
-                        <th>CODE MARQUE</th>
-                        <th>DESIGNATION</th>
-                        <th>EAN</th>
-                        <th></th>
-                        <th></th>
+                        @for ($j = 0; $j < 8; $j++)
+                            <td>
+                                <div class="h-4 w-full bg-gray-200 dark:bg-neutral-800 rounded"></div>
+                            </td>
+                        @endfor
                     </tr>
-                </thead>
-                <tbody>
-                    @forelse($produitsSelectionnes as $produit)
-                        <tr>
-                            <td>{{ $produit['id'] }}</td>
-                            <td>{{ $produit['product_code'] }}</td>
-                            <td>{{ $produit['categorie_code'] }}</td>
-                            <td>{{ $produit['marque_code'] }}</td>
-                            <td>{{ $produit['designation'] }}</td>
-                            <td class="text-primary font-semi-bold">{{ $produit['EAN'] }}</td>
-                            <td>
-                                <x-input
-                                    type="text"
-                                    class="input-sm w-28"
-                                    wire:model.defer="prix.{{ $produit['id'] }}"
-                                    label="Prix"
-                                    placeholder="0.00"
-                                />
-                            </td>
-                            <td>
-                                <x-input
-                                    type="text"
-                                    class="input-sm w-20"
-                                    wire:model.defer="tax.{{ $produit['id'] }}"
-                                    label="TVA"
-                                    placeholder="0.2"
-                                />
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="8" class="text-center text-gray-500">Aucun produit sélectionné.</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
+                @endfor
+            </tbody>
+        </table>
+    </template>
+
+    {{-- Table visible après le skeleton --}}
+    <div x-show="showData" x-transition:enter="transition-opacity duration-1000 ease-out"
+         x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100">
+        <table class="table w-full">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>CODE PRODUIT</th>
+                    <th>CODE CATEGORIE</th>
+                    <th>CODE MARQUE</th>
+                    <th>DESIGNATION</th>
+                    <th>EAN</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($produitsSelectionnes as $produit)
+                    <tr>
+                        <td>{{ $produit['id'] }}</td>
+                        <td>{{ $produit['product_code'] }}</td>
+                        <td>{{ $produit['categorie_code'] }}</td>
+                        <td>{{ $produit['marque_code'] }}</td>
+                        <td>{{ $produit['designation'] }}</td>
+                        <td class="font-semi-bold">{{ $produit['EAN'] }}</td>
+                        <td>
+                            <x-input
+                                type="text"
+                                class="input-sm w-28"
+                                wire:model.defer="prix.{{ $produit['id'] }}"
+                                label="Prix"
+                                placeholder="0.00"
+                            />
+                        </td>
+                        <td>
+                            <x-input
+                                type="text"
+                                class="input-sm w-20"
+                                wire:model.defer="tax.{{ $produit['id'] }}"
+                                label="TVA"
+                                placeholder="0.2"
+                            />
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="8" class="text-center text-gray-500">Aucun produit sélectionné.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+</div>
+
 
         <div class="mt-6 flex justify-end">
             <x-slot:actions>

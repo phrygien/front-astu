@@ -11,7 +11,7 @@ new class extends Component
     public int $page = 1;
     public array $products = [];
     public int $totalPages = 1;
-    public int $perPage = 30;
+    public int $perPage = 15;
 
     public array $selectedProducts = [];
     public bool $checkedall = false;
@@ -194,16 +194,16 @@ new class extends Component
 <div>
     <x-header title="Produit fournisseur" subtitle="Gerer les produits fournisseur sur ASTUPARF" separator progress-indicator>
         <x-slot:middle class="!justify-end">
-            <x-input icon="o-bolt" placeholder="Chercher ..." />
+            <x-input icon="o-magnifying-glass" placeholder="Chercher ..." class="input-sm" />
         </x-slot:middle>
         <div class="mb-4">
     <span class="text-sm text-gray-600">Produits sélectionnés : <strong>{{ $selectedCount }}</strong></span>
 </div>
 
         <x-slot:actions>
-        <x-button icon="o-funnel" />
+        <x-button icon="o-funnel" class="btn-sm" />
         <fieldset class="fieldset">
-            <select class="select" wire:model.live="perPage">
+            <select class="select input-sm" wire:model.live="perPage">
                 <option disabled selected>Afficher par</option>
                 <option value="10">10</option>
                 <option value="50">50</option>
@@ -245,8 +245,9 @@ new class extends Component
         </x-slot:actions>
     </x-header>
 
-    <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
-        <table class="table w-full">
+<div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
+
+        <table class="table w-full mt-4">
             <!-- head -->
             <thead>
                 <tr>
@@ -269,7 +270,7 @@ new class extends Component
 
             <tbody x-data="{ showSkeleton: true }" x-init="setTimeout(() => showSkeleton = false, 2000)">
                 {{-- Skeleton visible pendant 5 secondes --}}
-                @for ($i = 0; $i < 10; $i++)
+                @for ($i = 0; $i < 20; $i++)
                 <tr x-show="showSkeleton" class="animate-pulse">
                     <th>
                         <div class="h-4 w-24 bg-gray-200 dark:bg-neutral-800 rounded"></div>
