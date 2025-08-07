@@ -222,8 +222,19 @@ new class extends Component
 @if($fournisseur)
 <div class="flex flex-col gap-6">
 
-    <div class="flow-root">
+<div class="flow-root" x-data="{ showData: false }" x-init="setTimeout(() => showData = true, 2000)">
+    {{-- Skeleton pendant le chargement --}}
+    <div x-show="!showData" class="space-y-4 animate-pulse">
+        @for ($i = 0; $i < 10; $i++)
+            <div class="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
+                <dt class="h-4 w-32 bg-gray-300 dark:bg-neutral-700 rounded col-span-1"></dt>
+                <dd class="h-4 w-full bg-gray-200 dark:bg-neutral-600 rounded col-span-2"></dd>
+            </div>
+        @endfor
+    </div>
 
+    {{-- Données affichées après le skeleton --}}
+    <div x-show="showData" x-transition.opacity.duration.500ms>
         @php
             $fields = [
                 ['label' => 'Nom', 'value' => $fournisseur['name'] ?? '-'],
@@ -240,17 +251,17 @@ new class extends Component
             ];
         @endphp
 
-
-    <dl class="-my-3 divide-y divide-gray-200 rounded border border-gray-200 text-sm">
-        @foreach ($fields as $field)
-            <div class="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
-                <dt class="font-medium text-gray-900">{{ $field['label'] }}</dt>
-
-                <dd class="text-gray-700 sm:col-span-2">{{ $field['value'] }}</dd>
-            </div>
-        @endforeach
-    </dl>
+        <dl class="-my-3 divide-y divide-gray-200 rounded border border-gray-200 text-sm">
+            @foreach ($fields as $field)
+                <div class="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
+                    <dt class="font-medium text-gray-900">{{ $field['label'] }}</dt>
+                    <dd class="text-gray-700 sm:col-span-2">{{ $field['value'] }}</dd>
+                </div>
+            @endforeach
+        </dl>
     </div>
+</div>
+
 
     {{-- <x-card class="rounded-md border border-base-100 bg-base-100 shadow-sm" separator>
         <div class="space-y-2">
