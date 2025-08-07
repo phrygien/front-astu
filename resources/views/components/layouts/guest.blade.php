@@ -8,16 +8,9 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="min-h-screen font-sans antialiased bg-base-200">
-    {{-- MAIN --}}
-    <x-main>
-        {{-- The `$slot` goes here --}}
-        <x-slot:content>
-            {{ $slot }}
-        </x-slot:content>
-    </x-main>
+<body>
+        <x-toast />
+    {{ $slot }}
 
-    {{--  TOAST area --}}
-    <x-toast />
 </body>
 </html>
