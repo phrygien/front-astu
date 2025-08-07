@@ -16,9 +16,14 @@ new class extends Component
     public array $selectedProducts = [];
     public bool $checkedall = false;
 
-    public function mount(): void
+    public int $fournisseurId;
+
+    public function mount($id): void
     {
+        // Récupération de la sélection globale en session
+        $this->selectedProducts = session('selected_products', []);
         $this->fetchProducts();
+        $this->fournisseurId = $id;
     }
 
     public function updatedPerPage(): void
@@ -39,7 +44,6 @@ new class extends Component
             $this->products = $response['data']['data'];
             $this->totalPages = $response['data']['total_page'];
 
-            // synchroniser checkbox "TOUS" de la page actuelle
             $ids = collect($this->products)->pluck('id')->toArray();
             $this->checkedall = empty(array_diff($ids, $this->selectedProducts));
         }
@@ -56,31 +60,123 @@ new class extends Component
     public function updatedCheckedall(bool $value): void
     {
         $ids = collect($this->products)->pluck('id')->toArray();
+
         if ($value) {
             $this->selectedProducts = array_unique(array_merge($this->selectedProducts, $ids));
         } else {
             $this->selectedProducts = array_diff($this->selectedProducts, $ids);
         }
+
         $this->selectedProducts = array_values($this->selectedProducts);
+
+        // Persist in session
+        session(['selected_products' => $this->selectedProducts]);
     }
 
     public function updatedSelectedProducts(): void
     {
         $ids = collect($this->products)->pluck('id')->toArray();
         $this->checkedall = empty(array_diff($ids, $this->selectedProducts));
+
+        // Persist in session
+        session(['selected_products' => $this->selectedProducts]);
     }
 
-    public function sauvegarderSelection(): void
+    // public function sauvegarderSelection(): void
+    // {
+    //     // Nettoyage session et enregistrement final
+    //     $selected = $this->selectedProducts;
+    //     session()->forget('selected_products');
+    //     session(['produits_selectionnes' => $selected]);
+
+    //     $this->warning(
+    //         'Produits sélectionnés enregistrés.',
+    //         redirectTo: '/gestion/fournisseurs/execute-attach'
+    //     );
+    // }
+
+    // public function sauvegarderSelection(): void
+    // {
+    //     $selected = collect($this->products)
+    //         ->whereIn('id', $this->selectedProducts)
+    //         ->values()
+    //         ->all();
+
+    //     $old = session('produits_selectionnes', []);
+    //     $merged = collect($old)
+    //         ->merge($selected)
+    //         ->unique('id')
+    //         ->values()
+    //         ->all();
+
+    //     session(['produits_selectionnes' => $merged]);
+
+    //     $this->warning(
+    //         'Produits sélectionnés enregistrés.',
+    //         redirectTo: '/gestion/fournisseurs/execute-attach'
+    //     );
+    // }
+
+    // public function sauvegarderSelection(): void
+    // {
+    //     $selected = collect($this->products)
+    //         ->whereIn('id', $this->selectedProducts)
+    //         ->values()
+    //         ->all();
+
+    //     $old = session('produits_selectionnes', []);
+
+    //     // Nettoyer les anciennes données invalides (genre strings ou ids seuls)
+    //     $old = collect($old)
+    //         ->filter(fn($item) => is_array($item) && isset($item['id']))
+    //         ->values();
+
+    //     $merged = $old
+    //         ->merge($selected)
+    //         ->unique('id') // pour ne pas avoir deux fois le même produit
+    //         ->values()
+    //         ->all();
+
+    //     session(['produits_selectionnes' => $merged]);
+
+    //     $this->warning(
+    //         'Produits sélectionnés enregistrés.',
+    //         redirectTo: '/gestion/fournisseurs/execute-attach'
+    //     );
+    // }
+
+        public function sauvegarderSelection(): void
     {
-        // On peut enregistrer en session ou envoyer ailleurs
-        $selected = collect($this->products)->whereIn('id', $this->selectedProducts)->values()->all();
-        session(['produits_selectionnes' => $selected]);
+        // Produits de la page actuelle sélectionnés
+        $selectionPage = collect($this->products)
+            ->whereIn('id', $this->selectedProducts)
+            ->values()
+            ->all();
 
-        $this->warning(
-            'Produits sélectionnés enregistrés.',
-            redirectTo: '/gestion/fournisseurs/execute-attach'
-        );
+        // Ancienne sélection en session
+        $ancienneSelection = collect(session('produits_selectionnes', []))
+            ->filter(fn($item) => is_array($item) && isset($item['id']))
+            ->values();
+
+        // Fusion des données
+        $fusion = $ancienneSelection
+            ->merge($selectionPage)
+            ->unique('id')
+            ->values()
+            ->all();
+
+        // Sauvegarde session
+        session([
+            'produits_selectionnes' => $fusion,
+            'fournisseur_id' => $this->fournisseurId,
+        ]);
+        
+
+        $this->success('Produits sélectionnés enregistrés.');
+
+        $this->redirect('/gestion/fournisseurs/execute-attach'); // ou route() si besoin
     }
+
 
     public function with(): array
     {
@@ -88,9 +184,11 @@ new class extends Component
             'products' => $this->products,
             'currentPage' => $this->page,
             'totalPages' => $this->totalPages,
+            'selectedCount' => count($this->selectedProducts),
         ];
     }
 };
+
 
 ?>
 <div>
@@ -98,6 +196,10 @@ new class extends Component
         <x-slot:middle class="!justify-end">
             <x-input icon="o-bolt" placeholder="Chercher ..." />
         </x-slot:middle>
+        <div class="mb-4">
+    <span class="text-sm text-gray-600">Produits sélectionnés : <strong>{{ $selectedCount }}</strong></span>
+</div>
+
         <x-slot:actions>
         <x-button icon="o-funnel" />
         <fieldset class="fieldset">
@@ -143,7 +245,7 @@ new class extends Component
                 <tr>
                     <th>
                         <label>
-                            <input type="checkbox" class="checkbox" wire:model="checkedall" /> TOUS
+                            <input type="checkbox" class="checkbox" wire:model.live="checkedall" /> TOUS
                         </label>
                     </th>
                     <th>CODE PRODUIT</th>
@@ -208,13 +310,12 @@ new class extends Component
                     class="transition-opacity">
                     <th>
                         <label>
-                            <input 
-                                type="checkbox"
-                                class="checkbox"
-                                wire:model="selectedProducts"
-                                value="{{ $product['id'] }}"
-                                @if(in_array($product['id'], $selectedProducts)) checked @endif
-                            />
+                        <input 
+                            type="checkbox"
+                            class="checkbox"
+                            wire:model.live="selectedProducts"
+                            value="{{ $product['id'] }}"
+                        />
 
                         </label>
                     </th>
