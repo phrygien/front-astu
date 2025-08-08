@@ -78,8 +78,8 @@ new class extends Component
             session()->forget(['produits_selectionnes', 'fournisseur_id']);
 
             $this->success(
-                'Fournisseur sauvegarder avec succees',
-                redirectTo: '/gestion/fournisseurs'
+                'Produits affectés au fournisseur avec succès !',
+                redirectTo: '/gestion/fournisseurs/'.$this->fournisseurId. '/view'
             );
 
             $this->reset();
@@ -109,7 +109,8 @@ new class extends Component
 ?>
 
 <div class="w-full mx-auto">
-    <x-header title="Affectation produit fournisseur" subtitle="Valider les produits sélectionnés" separator>
+        <x-form wire:submit="envoyerProduits">
+    <x-header title="Liaison produit–fournisseur" subtitle="Confirmer les produits sélectionnés" separator>
         <x-slot:actions>
             <div class="breadcrumbs text-sm">
                 <ul>
@@ -121,11 +122,9 @@ new class extends Component
                 </ul>
             </div> -
             <x-button label="Annuler" class="btn btn-active btn-sm" wire:click="annuler" />
-            <x-button label="Executer l'operation" class="btn-primary btn-sm" type="submit" spinner="envoyerProduits" />
+            <x-button label="Soumettre" class="btn-primary btn-sm" type="submit" spinner="envoyerProduits" />
         </x-slot:actions>
     </x-header>
-
-    <x-form wire:submit="envoyerProduits">
 
 <div x-data="{ showData: false }" x-init="setTimeout(() => showData = true, 2000)" class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 mt-4">
 
@@ -217,7 +216,7 @@ new class extends Component
         <div class="mt-6 flex justify-end">
             <x-slot:actions>
                 <x-button label="Annuler" class="btn btn-active btn-sm" wire:click="annuler" />
-                <x-button label="Executer l'operation" class="btn-primary btn-sm" type="submit" spinner="envoyerProduits" />
+                <x-button label="Soumettre" class="btn-primary btn-sm" type="submit" spinner="envoyerProduits" />
             </x-slot:actions>
         </div>
     </x-form>

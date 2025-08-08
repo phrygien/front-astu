@@ -375,6 +375,8 @@ new class extends Component
                         <th>VARIANT</th>
                         <th>ARTICLE</th>
                         <th>REF_FABRI</th>
+                        <th>PRIX FOURNISSEUR </th>
+                        <th>TAX</th>
                         <th>EAN</th>
                         <th class="text-end hidden md:table-cell">ACTION</th>
                     </tr>
@@ -388,6 +390,8 @@ new class extends Component
                         <td><div class="h-4 w-32 bg-gray-200 dark:bg-neutral-800 rounded"></div></td>
                         <td><div class="h-4 w-32 bg-gray-200 dark:bg-neutral-800 rounded"></div></td>
                         <td><div class="h-4 w-32 bg-gray-200 dark:bg-neutral-800 rounded"></div></td>
+                        <td><div class="h-4 w-32 bg-gray-200 dark:bg-neutral-800 rounded"></div></td>
+                        <td><div class="h-4 w-32 bg-gray-200 dark:bg-neutral-800 rounded"></div></td>
                         <td class="text-end"><div class="h-8 w-16 bg-gray-200 dark:bg-neutral-800 rounded"></div></td>
                     </tr>
                     @endfor
@@ -398,6 +402,8 @@ new class extends Component
                         <td>{{ $product['designation_variant'] }}</td>
                         <td>{{ $product['article'] }}</td>
                         <td>{{ $product['ref_fabri_n_1'] }}</td>
+                        <td>{{ $product['prix_fournisseur_ht'] }}</td>
+                        <td>{{ $product['tax_produit_fournisseur'] }}</td>
                         <td>{{ $product['EAN'] }}</td>
                         <td class="text-end px-6 py-3">
                             <a class="btn btn-soft btn-sm btn-primary" href="{{ route('produits.show', $product['product_id']) }}" wire:navigate>
